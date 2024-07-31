@@ -22,6 +22,7 @@ import { SharedModule } from '../../shared/shared.module';
   exports: [
     ManufacturersFormComponent,
     ManufacturersListComponent
-  ]
+  ],
+  bootstrap: [ManufacturersComponent]
 })
 export class ManufacturersModule { }
