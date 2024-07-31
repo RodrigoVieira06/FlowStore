@@ -1,9 +1,9 @@
 <mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav opened mode="side">
+  <mat-sidenav #sidenav class="app-container__sidenav" opened mode="side">
     <app-sidenav [sidenav]="sidenav" />
   </mat-sidenav>
   <mat-sidenav-content class="app-container__content">
-    <img src="/assets/icons/menu.svg" alt="menu" class="app-container__content--sidenavButton" fontIcon="menu"
+    <img class="app-container__content--sidenavButton" src="/assets/icons/menu.svg" alt="menu" fontIcon="menu"
       (click)="sidenav.toggle()" *ngIf="!sidenav.opened">
     <router-outlet />
   </mat-sidenav-content>

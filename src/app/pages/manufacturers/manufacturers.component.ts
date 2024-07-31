@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './manufacturers.component.scss'
 })
 export class ManufacturersComponent {
-
+  public title: string = 'Fabricantes';
 }

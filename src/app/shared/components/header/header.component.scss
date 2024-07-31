@@ -1,0 +1,35 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding-block: 20px;
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &__userdetails {
+    display: flex;
+    gap: 24px;
+
+    &--notifications {
+      width: 28x;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(0%);
+        transition: filter 0.5s ease;
+      }
+    }
+
+    &--profile {
+      width: 30px;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(0%);
+        transition: filter 0.5s ease;
+      }
+    }
+  }
+}
