@@ -1,0 +1,22 @@
+@import "../../public/assets/styles/colors";
+
+.app-container {
+  height: 100vh;
+
+  mat-sidenav {
+    width: 260px;
+  }
+
+  &__content {
+    background: $app-background-color;
+
+    &--sidenavButton {
+      position: fixed;
+      margin: 20px;
+      color: $text-primary-color;
+      width: 30px;
+      filter: brightness(0%);
+      cursor: pointer;
+    }
+  }
+}

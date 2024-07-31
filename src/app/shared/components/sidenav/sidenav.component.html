@@ -1,1 +1,24 @@
-<p>sidenav works!</p>
+<section class="sidenav-container">
+  <header class="sidenav-container__header">
+    <span class="sidenav-container__header--logo">
+      <img src="/assets/icons/logo.svg" alt="Logo">
+      <h1>Flow Store</h1>
+    </span>
+    <span class="sidenav-container__header--drawerhandler" (click)="sidenav.toggle()">
+      <img src="/assets/icons/openmenu.svg" alt="openmenu">
+    </span>
+  </header>
+  <main class="sidenav-container__body">
+    <span class="sidenav-container__body--subtitle">MAIN MENU</span>
+    <ul class="sidenav-container__body--menu">
+      <li class="menu-item" [routerLink]="['/manufacturers']" routerLinkActive="active">
+        <img src="/assets/icons/person.svg" alt="person">
+        <p>Fabricantes</p>
+      </li>
+      <li class="menu-item" [routerLink]="['/products']" routerLinkActive="active">
+        <img src="/assets/icons/product.svg" alt="product">
+        <p>Produtos</p>
+      </li>
+    </ul>
+  </main>
+</section>

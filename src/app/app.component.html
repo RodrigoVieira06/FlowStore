@@ -1,2 +1,10 @@
-<app-sidenav />
-<router-outlet />
+<mat-sidenav-container class="app-container">
+  <mat-sidenav #sidenav opened mode="side">
+    <app-sidenav [sidenav]="sidenav" />
+  </mat-sidenav>
+  <mat-sidenav-content class="app-container__content">
+    <img src="/assets/icons/menu.svg" alt="menu" class="app-container__content--sidenavButton" fontIcon="menu"
+      (click)="sidenav.toggle()" *ngIf="!sidenav.opened">
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>
