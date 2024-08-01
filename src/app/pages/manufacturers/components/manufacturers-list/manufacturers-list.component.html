@@ -14,10 +14,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of paginatedUsers">
-          <td>{{ user.nome }}</td>
-          <td>{{ user.cnpj }}</td>
-          <td>{{ user.logradouro }}</td>
+        <tr *ngFor="let entity of entities">
+          <td>{{ entity.nome }}</td>
+          <td>{{ entity.cnpj }}</td>
+          <td>{{ entity.logradouro }}</td>
           <td class="actions">
             <img src="/assets/icons/edit.svg" alt="edit">
             <img src="/assets/icons/trash.svg" alt="delete">
@@ -31,21 +31,21 @@
         <select (change)="changePageSize($event)">
           <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
         </select>
-        <p>of {{totalPages}}</p>
+        <p>of {{pageConfig?.totalElements}}</p>
       </div>
       <div class="table-container__pagination--pageControl">
-        <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
-        <button *ngIf="currentPage > 3" (click)="goToPage(1)" [class.active]="1 === currentPage">1</button>
+        <button (click)="prevPage()" [disabled]="currentPage === 0">&lt;</button>
+        <button *ngIf="currentPage > 2" (click)="goToPage(1)" [class.active]="0 === currentPage">1</button>
         <span *ngIf="showStartEllipsis">...</span>
-        <button *ngFor="let page of visiblePages" (click)="goToPage(page)" [class.active]="page === currentPage">
+        <button *ngFor="let page of visiblePages" (click)="goToPage(page)" [class.active]="page === (currentPage + 1)">
           {{ page }}
         </button>
         <span *ngIf="showEndEllipsis">...</span>
-        <button *ngIf="totalPages > 5 && currentPage <= totalPages - 3" (click)="goToPage(totalPages)"
-          [class.active]="totalPages === currentPage">
+        <button *ngIf="totalPages > 5 && (currentPage + 1) <= totalPages - 3" (click)="goToPage(totalPages)"
+          [class.active]="totalPages === (currentPage + 1)">
           {{ totalPages }}
         </button>
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+        <button (click)="nextPage()" [disabled]="(currentPage + 1) === totalPages">&gt;</button>
       </div>
     </span>
   </section>

@@ -1,57 +1,71 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Manufacturer } from '../../models/manufacturer';
+import { ManufacturersService } from '../../services/manufacturers.service';
+import { Subscription } from 'rxjs';
+import { PaginatedResponse } from '../../../../shared/models/paginated-response';
+import { LoadingService } from '../../../../shared/services/loading/loading.service';
 
 @Component({
   selector: 'app-manufacturers-list-component',
   templateUrl: './manufacturers-list.component.html',
   styleUrl: './manufacturers-list.component.scss'
 })
-export class ManufacturersListComponent implements OnInit {
-  entities: Manufacturer[] = [];
-  paginatedUsers: any[] = [];
-  currentPage: number = 1;
-  pageSize: number = 5;
-  totalPages: number = 0;
-  pages: number[] = [];
-  visiblePages: number[] = [];
-  showStartEllipsis: boolean = false;
-  showEndEllipsis: boolean = false;
-  pageSizes: number[] = [5, 10, 25, 100];
+export class ManufacturersListComponent implements OnInit, OnDestroy {
+  public entities: Manufacturer[] = [];
+
+  public pageConfig?: PaginatedResponse<Manufacturer>;
+  public currentPage: number = 0;
+  public pageSize: number = 10;
+  public totalPages: number = 0;
+  public pages: number[] = [];
+  public visiblePages: number[] = [];
+  public showStartEllipsis: boolean = false;
+  public showEndEllipsis: boolean = false;
+  public pageSizes: number[] = [10, 25, 100];
+
+  public onError: boolean = false;
+
+  private subscriptions = new Subscription();
+
+  constructor(
+    public loadingService: LoadingService,
+    private manufacturersService: ManufacturersService,
+  ) { }
 
   ngOnInit() {
-    this.mockData();
-    this.updatePagination();
+    this.getManufacturers();
   }
 
-  mockData(): void {
-    for (let i = 1; i <= 100; i++) {
-      this.entities.push({
-        nome: `Fabricante ${i}`,
-        cnpj: `123456${i}`,
-        logradouro: `teste ${i}`,
-        bairro: '',
-        cep: '',
-        cidade: '',
-        complemento: '',
-        contato: '',
-        contatoTipo: '',
-        estado: '',
-        id: i,
-        numero: ''
-      });
-    }
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
-  protected updatePagination(): void {
-    this.totalPages = Math.ceil(this.entities.length / this.pageSize);
+  public getManufacturers(): void {
+    this.loadingService.show();
+    const subscription = this.manufacturersService.listManufactures(this.pageSize, this.currentPage)
+      .subscribe({
+        next: (response: PaginatedResponse<Manufacturer>) => {
+          this.pageConfig = response;
+          this.entities = response.content;
+          this.updatePagination();
+        },
+        error: (error) => {
+          this.onError = true;
+        },
+        complete: () => this.loadingService.hide()
+      })
+
+    this.subscriptions.add(subscription);
+  }
+
+  public updatePagination(): void {
+    this.totalPages = this.pageConfig!.totalPages;
     this.pages = Array.from({ length: this.totalPages }, (v, k) => k + 1);
     this.updateVisiblePages();
-    this.paginatedUsers = this.entities.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+
   }
 
-  protected updateVisiblePages(): void {
+  public updateVisiblePages(): void {
     this.showStartEllipsis = false;
     this.showEndEllipsis = false;
 
@@ -60,7 +74,9 @@ export class ManufacturersListComponent implements OnInit {
     } else {
       if (this.currentPage <= 3) {
         this.visiblePages = [1, 2, 3, 4, 5];
-        this.showEndEllipsis = true;
+        if (this.totalPages > 6) {
+          this.showEndEllipsis = true;
+        }
       } else if (this.currentPage > this.totalPages - 3) {
         this.visiblePages = [
           this.totalPages - 4,
@@ -72,11 +88,11 @@ export class ManufacturersListComponent implements OnInit {
         this.showStartEllipsis = true;
       } else {
         this.visiblePages = [
-          this.currentPage - 2,
           this.currentPage - 1,
           this.currentPage,
           this.currentPage + 1,
-          this.currentPage + 2
+          this.currentPage + 2,
+          this.currentPage + 3
         ];
         this.showStartEllipsis = true;
         this.showEndEllipsis = true;
@@ -84,29 +100,29 @@ export class ManufacturersListComponent implements OnInit {
     }
   }
 
-  protected goToPage(page: number): void {
-    this.currentPage = page;
-    this.updatePagination();
+  public goToPage(page: number): void {
+    this.currentPage = (page - 1);
+    this.getManufacturers();
   }
 
-  prevPage() {
-    if (this.currentPage > 1) {
+  public prevPage() {
+    if (this.currentPage > 0) {
       this.currentPage--;
-      this.updatePagination();
+      this.getManufacturers();
     }
   }
 
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
+  public nextPage() {
+    if (this.currentPage < (this.totalPages - 1)) {
       this.currentPage++;
-      this.updatePagination();
+      this.getManufacturers();
     }
   }
 
-  changePageSize(event: Event) {
+  public changePageSize(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.pageSize = Number(selectElement.value);
-    this.currentPage = 1;
-    this.updatePagination();
+    this.currentPage = 0;
+    this.getManufacturers();
   }
 }
