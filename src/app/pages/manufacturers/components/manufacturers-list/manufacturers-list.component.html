@@ -1,1 +1,52 @@
-<p>manufacturers-list-component works!</p>
+<main class="manufacturers-container">
+  <section class="manufacturers-container__actions">
+    <input class="manufacturers-container__actions--find" placeholder="Busca">
+    <button class="manufacturers-container__actions--createButton">CADASTRAR</button>
+  </section>
+  <section class="table-container">
+    <table class="table-container__table">
+      <thead>
+        <tr>
+          <th>NOME</th>
+          <th>CNPJ</th>
+          <th>ENDEREÇO</th>
+          <th>AÇÃO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers">
+          <td>{{ user.nome }}</td>
+          <td>{{ user.cnpj }}</td>
+          <td>{{ user.logradouro }}</td>
+          <td class="actions">
+            <img src="/assets/icons/edit.svg" alt="edit">
+            <img src="/assets/icons/trash.svg" alt="delete">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <span class="table-container__pagination">
+      <div class="table-container__pagination--pageSizeControl">
+        <p>Showing</p>
+        <select (change)="changePageSize($event)">
+          <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+        </select>
+        <p>of {{totalPages}}</p>
+      </div>
+      <div class="table-container__pagination--pageControl">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+        <button *ngIf="currentPage > 3" (click)="goToPage(1)" [class.active]="1 === currentPage">1</button>
+        <span *ngIf="showStartEllipsis">...</span>
+        <button *ngFor="let page of visiblePages" (click)="goToPage(page)" [class.active]="page === currentPage">
+          {{ page }}
+        </button>
+        <span *ngIf="showEndEllipsis">...</span>
+        <button *ngIf="totalPages > 5 && currentPage <= totalPages - 3" (click)="goToPage(totalPages)"
+          [class.active]="totalPages === currentPage">
+          {{ totalPages }}
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+      </div>
+    </span>
+  </section>
+</main>

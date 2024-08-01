@@ -1,0 +1,149 @@
+@import '../../../../../../public/assets/styles/colors';
+
+.manufacturers-container {
+  display: flex;
+  flex-direction: column;
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+
+    &--find {
+      width: 352px;
+      height: 40px;
+      font-size: 15px;
+      color: $text-secundary-color;
+      padding-inline: 16px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border: 0;
+      transition: filter 0.3s ease;
+
+      &:focus {
+        outline: none;
+        filter: brightness(95%);
+        transition: filter 0.3s ease;
+      }
+
+      &:hover {
+        filter: brightness(97%);
+        transition: filter 0.3s ease;
+      }
+    }
+
+    &--createButton {
+      width: 169px;
+      height: 40px;
+      font-weight: 700;
+      background-color: $primary-color;
+      color: $contrast-color;
+      border: 0;
+      border-radius: 4px;
+
+      &:hover {
+        cursor: pointer;
+        filter: brightness(90%);
+        transition: filter 0.3s ease;
+      }
+    }
+  }
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $contrast-color;
+  border-radius: 16px;
+  padding-block: 16px;
+  font-size: 16px;
+
+  &__table {
+    width: 100%;
+    margin-bottom: 16px;
+
+    &--head {
+      color: $text-secundary-color;
+    }
+
+    th,
+    td {
+      text-align: start;
+      padding-left: 20px;
+      padding-right: 26px;
+      padding-block: 16px;
+      border-bottom: 1px solid $line-table-color;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+
+      img {
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(50%);
+          transition: filter 0.5s ease;
+        }
+      }
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    &--pageSizeControl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: $text-secundary-color;
+
+      select {
+        width: 80px;
+        height: 38px;
+        border: 1px solid $line-table-color;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: 600;
+      }
+    }
+
+    &--pageControl {
+      display: flex;
+      gap: 2px;
+      margin-right: 24px;
+
+      button {
+        border: 0;
+        border-radius: 4px;
+        width: 28px;
+        height: 28px;
+        color: $text-secundary-color;
+
+        &:hover {
+          &:enabled {
+            cursor: pointer;
+            filter: brightness(93%);
+            transition: filter 0.5s ease;
+          }
+        }
+      }
+
+      button.active {
+        cursor: default !important;
+        font-weight: bold;
+        background-color: $primary-color;
+        color: $contrast-color;
+        filter: brightness(100%) !important;
+      }
+    }
+  }
+}
