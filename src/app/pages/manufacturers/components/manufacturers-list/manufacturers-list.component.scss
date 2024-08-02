@@ -13,7 +13,7 @@
       width: 352px;
       height: 40px;
       font-size: 15px;
-      color: $text-secundary-color;
+      color: $text-primary-color;
       background-color: $contrast-color;
       padding-left: 16px;
       border-radius: 4px;
@@ -23,9 +23,11 @@
       background: url('../../../../../../public/assets/icons/magnifier.svg') no-repeat right 10px center;
       background-size: 20px 20px;
       padding-right: 40px;
+      transition: background-color 0.3s ease;
 
       &:focus {
         outline: none;
+        background-color: rgba(0, 0, 0, 0.1);
       }
     }
 
@@ -68,7 +70,7 @@
     th,
     td {
       text-align: start;
-      padding-left: 20px;
+      padding-left: 36px;
       padding-right: 26px;
       padding-block: 16px;
       border-bottom: 1px solid $line-table-color;
@@ -86,6 +88,33 @@
           transition: filter 0.5s ease;
         }
       }
+    }
+  }
+
+  &__empty-table {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    color: $text-secundary-color;
+
+    &--image {
+      width: 60px;
+      border: 6px solid $text-secundary-color;
+      border-radius: 100%;
+      padding: 10px;
+      margin: 10px;
+    }
+
+    &--title {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 5px;
+    }
+
+    &--info {
+      font-size: 20px;
+      margin: 5px;
     }
   }
 

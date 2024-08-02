@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Manufacturer } from '../../models/manufacturer';
 import { ManufacturersService } from '../../services/manufacturers.service';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription, switchMap } from 'rxjs';
 import { PaginatedResponse } from '../../../../shared/models/paginated-response';
 import { LoadingService } from '../../../../shared/services/loading/loading.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-manufacturers-list-component',
@@ -21,9 +22,11 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   public visiblePages: number[] = [];
   public showStartEllipsis: boolean = false;
   public showEndEllipsis: boolean = false;
-  public pageSizes: number[] = [10, 25, 100];
+  public pageSizes: number[] = [10, 25, 50];
 
   public onError: boolean = false;
+
+  public searchControl = new FormControl();
 
   private subscriptions = new Subscription();
 
@@ -34,6 +37,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getManufacturers();
+    this.searchManufacturers();
   }
 
   ngOnDestroy(): void {
@@ -42,12 +46,10 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
 
   public getManufacturers(): void {
     this.loadingService.show();
-    const subscription = this.manufacturersService.listManufactures(this.pageSize, this.currentPage)
+    const subscription = this.manufacturersService.getManufacturers(this.pageSize, this.currentPage)
       .subscribe({
         next: (response: PaginatedResponse<Manufacturer>) => {
-          this.pageConfig = response;
-          this.entities = response.content;
-          this.updatePagination();
+          this.updatecomponent(response);
         },
         error: (error) => {
           this.onError = true;
@@ -56,6 +58,34 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
       })
 
     this.subscriptions.add(subscription);
+  }
+
+  public searchManufacturers(): void {
+    const subscription = this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      switchMap((value: string) => {
+        this.loadingService.show();
+        return this.manufacturersService.getManufacturers(this.pageSize, this.currentPage, value)
+      })
+    )
+      .subscribe({
+        next: (response: PaginatedResponse<Manufacturer>) => {
+          this.updatecomponent(response);
+          this.loadingService.hide();
+        },
+        error: (error) => {
+          this.onError = true;
+          this.loadingService.hide();
+        }
+      })
+
+    this.subscriptions.add(subscription);
+  }
+
+  public updatecomponent(response: PaginatedResponse<Manufacturer>): void {
+    this.pageConfig = response;
+    this.entities = response.content;
+    this.updatePagination();
   }
 
   public updatePagination(): void {

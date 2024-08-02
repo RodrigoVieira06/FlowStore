@@ -5,6 +5,7 @@ import { ManufacturersFormComponent } from './components/manufacturers-form/manu
 import { ManufacturersListComponent } from './components/manufacturers-list/manufacturers-list.component';
 import { ManufacturersComponent } from './manufacturers.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     AppRoutingManufacturersModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
     ManufacturersFormComponent,

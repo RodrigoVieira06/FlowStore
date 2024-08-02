@@ -1,6 +1,6 @@
 <main class="manufacturers-container">
   <section class="manufacturers-container__actions">
-    <input class="manufacturers-container__actions--find" placeholder="Busca">
+    <input class="manufacturers-container__actions--find" placeholder="Busca" type="text" [formControl]="searchControl">
     <button class="manufacturers-container__actions--createButton">CADASTRAR</button>
   </section>
   <section class="table-container">
@@ -27,6 +27,11 @@
         </tr>
       </tbody>
     </table>
+    <section class="table-container__empty-table" *ngIf="entities.length === 0">
+      <img class="table-container__empty-table--image" src="/assets/icons/table.svg" alt="table">
+      <h1 class="table-container__empty-table--title">Nenhum cadastro encontrado</h1>
+      <p class="table-container__empty-table--info">Adicione dados utilizando o botão cadastrar.</p>
+    </section>
     <span class="table-container__pagination">
       <div class="table-container__pagination--pageSizeControl">
         <p>Showing</p>
