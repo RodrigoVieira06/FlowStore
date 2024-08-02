@@ -101,6 +101,9 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   }
 
   public goToPage(page: number): void {
+    if (page === (this.currentPage + 1)) {
+      return;
+    }
     this.currentPage = (page - 1);
     this.getManufacturers();
   }
