@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Manufacturer } from '../models/manufacturer';
 import { environment } from '../../../../environments/environment.development';
 import { PaginatedResponse } from '../../../shared/models/paginated-response';
-import { isInteger } from '../../../shared/utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -12,30 +11,43 @@ import { isInteger } from '../../../shared/utils/utils';
 export class ManufacturersService {
 
   private base_url: string = environment.BASE_URL;
-  private list_endpoint: string = environment.MANUFACTURERS_ENDPOINT;
+  private main_endpoint: string = environment.MANUFACTURERS_ENDPOINT;
   private search_endpoint: string = environment.MANUFACTURERS_ENDPOINT_BY_NAME;
 
   constructor(private http: HttpClient) { }
 
-  public getManufacturers(pageSize: number = 10, pageIndex: number = 0, name?: string): Observable<PaginatedResponse<Manufacturer>> {
-    const url = this.buildListUrl(pageSize, pageIndex, name);
+  public getManufacturers(pageSize: number = 10, pageIndex: number = 0): Observable<PaginatedResponse<Manufacturer>> {
+    const pageSizeParam: string = `pageSize=${pageSize}`;
+    const pageIndexParam: string = `initialPage=${pageIndex}`;
+
+    const url = `${this.base_url}${this.main_endpoint}?&${pageSizeParam}&${pageIndexParam}`;
 
     return this.http.get<PaginatedResponse<Manufacturer>>(url);
   }
 
-  private buildListUrl(pageSize: number = 10, pageIndex: number = 0, name?: string): string {
+  public searchByNameManufacturers(pageSize: number = 10, pageIndex: number = 0, name?: string): Observable<PaginatedResponse<Manufacturer>> {
     const nameParam: string = `nome=${name}`;
     const pageSizeParam: string = `pageSize=${pageSize}`;
     const pageIndexParam: string = `initialPage=${pageIndex}`;
 
-    if (!name) {
-      return `${this.base_url}${this.list_endpoint}?&${pageSizeParam}&${pageIndexParam}`;
-    }
+    const url = `${this.base_url}${this.search_endpoint}?${nameParam}&${pageSizeParam}&${pageIndexParam}`;
 
-    if (name.length === 14 && isInteger(name)) {
-      return `${this.base_url}${this.list_endpoint}/${name}?&${pageSizeParam}&${pageIndexParam}`;
-    }
+    return this.http.get<PaginatedResponse<Manufacturer>>(url);
+  }
 
-    return `${this.base_url}${this.search_endpoint}?${nameParam}&${pageSizeParam}&${pageIndexParam}`;
+  public searchByCNPJManufacturers(pageSize: number = 10, pageIndex: number = 0, cnpj?: string): Observable<PaginatedResponse<Manufacturer>> {
+    const pageSizeParam: string = `pageSize=${pageSize}`;
+    const pageIndexParam: string = `initialPage=${pageIndex}`;
+
+    const url = `${this.base_url}${this.main_endpoint}/${cnpj}?&${pageSizeParam}&${pageIndexParam}`;
+
+    return this.http.get<PaginatedResponse<Manufacturer>>(url);
+  }
+
+
+  public deleteManufacturers(id: string): Observable<Manufacturer> {
+    const url = this.base_url + this.main_endpoint + '/' + id;
+
+    return this.http.delete<Manufacturer>(url);
   }
 }

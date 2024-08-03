@@ -5,6 +5,8 @@ import { debounceTime, Subscription, switchMap } from 'rxjs';
 import { PaginatedResponse } from '../../../../shared/models/paginated-response';
 import { LoadingService } from '../../../../shared/services/loading/loading.service';
 import { FormControl } from '@angular/forms';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog/confirm-dialog.service';
+import { isInteger } from '../../../../shared/utils/utils';
 
 @Component({
   selector: 'app-manufacturers-list-component',
@@ -33,6 +35,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   constructor(
     public loadingService: LoadingService,
     private manufacturersService: ManufacturersService,
+    private confirmDialogService: ConfirmDialogService
   ) { }
 
   ngOnInit() {
@@ -46,6 +49,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
 
   public getManufacturers(): void {
     this.loadingService.show();
+
     const subscription = this.manufacturersService.getManufacturers(this.pageSize, this.currentPage)
       .subscribe({
         next: (response: PaginatedResponse<Manufacturer>) => {
@@ -55,7 +59,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
           this.onError = true;
         },
         complete: () => this.loadingService.hide()
-      })
+      });
 
     this.subscriptions.add(subscription);
   }
@@ -65,7 +69,15 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
       debounceTime(300),
       switchMap((value: string) => {
         this.loadingService.show();
-        return this.manufacturersService.getManufacturers(this.pageSize, this.currentPage, value)
+        if (!value) {
+          return this.manufacturersService.getManufacturers(this.pageSize, this.currentPage);
+        }
+
+        if (value.length === 14 && isInteger(value)) {
+          return this.manufacturersService.searchByCNPJManufacturers(this.pageSize, this.currentPage, value);
+        }
+
+        return this.manufacturersService.searchByNameManufacturers(this.pageSize, this.currentPage, value);
       })
     )
       .subscribe({
@@ -80,6 +92,41 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
       })
 
     this.subscriptions.add(subscription);
+  }
+
+  public deleteManufacturers(id: string): void {
+    this.loadingService.show();
+
+    const subscription = this.manufacturersService.deleteManufacturers(id)
+      .subscribe(
+        {
+          next: (response: Manufacturer) => {
+            this.currentPage = 0;
+            this.getManufacturers();
+          },
+          error: (error) => {
+            this.onError = true;
+          },
+          complete: () => this.loadingService.hide()
+        });
+
+    this.subscriptions.add(subscription);
+  }
+
+  public openDeleteManufacturersDialog(manufacturer: Manufacturer) {
+    const title: string = 'Deletar fabricante';
+    const bodyInfo: string = `Gostaria de apagar o fabricante ${manufacturer.nome}?`;
+
+    const dialogRef = this.confirmDialogService.open(title, bodyInfo);
+
+    const subscribe = dialogRef.afterClosed()
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.deleteManufacturers(manufacturer.id.toString());
+        }
+      });
+
+    this.subscriptions.add(subscribe);
   }
 
   public updatecomponent(response: PaginatedResponse<Manufacturer>): void {
