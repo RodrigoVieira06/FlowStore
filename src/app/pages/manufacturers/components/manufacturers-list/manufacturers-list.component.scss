@@ -77,10 +77,10 @@
     }
 
     .actions {
-      display: flex;
-      gap: 10px;
+      white-space: nowrap;
 
       img {
+        margin-inline: 5px;
         cursor: pointer;
 
         &:hover {

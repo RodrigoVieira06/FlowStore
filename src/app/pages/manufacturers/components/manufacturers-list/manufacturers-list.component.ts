@@ -7,6 +7,7 @@ import { LoadingService } from '../../../../shared/services/loading/loading.serv
 import { FormControl } from '@angular/forms';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog/confirm-dialog.service';
 import { isInteger } from '../../../../shared/utils/utils';
+import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
 
 @Component({
   selector: 'app-manufacturers-list-component',
@@ -35,7 +36,8 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   constructor(
     public loadingService: LoadingService,
     private manufacturersService: ManufacturersService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private toasterService: ToasterService
   ) { }
 
   ngOnInit() {
@@ -94,20 +96,22 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(subscription);
   }
 
-  public deleteManufacturers(id: string): void {
+  public deleteManufacturers(id: string, manufacturer: string): void {
     this.loadingService.show();
 
     const subscription = this.manufacturersService.deleteManufacturers(id)
       .subscribe(
         {
-          next: (response: Manufacturer) => {
+          next: () => {
             this.currentPage = 0;
             this.getManufacturers();
+            this.loadingService.hide()
+            this.toasterService.showToast(`O fabricante ${manufacturer} foi deletado com sucesso`, 'success');
           },
           error: (error) => {
-            this.onError = true;
-          },
-          complete: () => this.loadingService.hide()
+            this.loadingService.hide()
+            this.toasterService.showToast(`Ocorreu um erro ao tentar deletar o fabricante ${manufacturer}`, 'error');
+          }
         });
 
     this.subscriptions.add(subscription);
@@ -122,7 +126,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     const subscribe = dialogRef.afterClosed()
       .subscribe((result: boolean) => {
         if (result) {
-          this.deleteManufacturers(manufacturer.id.toString());
+          this.deleteManufacturers(manufacturer.id.toString(), manufacturer.nome);
         }
       });
 
@@ -201,6 +205,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
 
   public changePageSize(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
+    this.searchControl.setValue('');
     this.pageSize = Number(selectElement.value);
     this.currentPage = 0;
     this.getManufacturers();
