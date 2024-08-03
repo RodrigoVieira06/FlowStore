@@ -28,8 +28,6 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   public showEndEllipsis: boolean = false;
   public pageSizes: number[] = [10, 25, 50];
 
-  public onError: boolean = false;
-
   public searchControl = new FormControl();
 
   private subscriptions = new Subscription();
@@ -59,7 +57,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
           this.updatecomponent(response);
         },
         error: (error) => {
-          this.onError = true;
+          this.toasterService.showToast('Ocorreu um erro ao listar os fabricantes', 'error');
         },
         complete: () => this.loadingService.hide()
       });
@@ -88,8 +86,8 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
           this.updatecomponent(response);
           this.loadingService.hide();
         },
-        error: (error) => {
-          this.onError = true;
+        error: () => {
+          this.toasterService.showToast('Ocorreu um erro ao buscar os fabricantes', 'error');
           this.loadingService.hide();
         }
       })

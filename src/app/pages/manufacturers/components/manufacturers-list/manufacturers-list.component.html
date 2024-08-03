@@ -1,7 +1,7 @@
 <main class="manufacturers-container">
   <section class="manufacturers-container__actions">
     <input class="manufacturers-container__actions--find" placeholder="Busca" type="text" [formControl]="searchControl">
-    <button class="manufacturers-container__actions--createButton">CADASTRAR</button>
+    <button class="manufacturers-container__actions--createButton" [routerLink]="['/manufacturers/create']">CADASTRAR</button>
   </section>
   <section class="table-container">
     <table class="table-container__table">
