@@ -8,6 +8,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { ToasterComponent } from './components/toaster/toaster.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MatButtonModule} from '@angular/material/button';
     SidenavComponent,
     HeaderComponent,
     LoadingComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ToasterComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,9 @@ import {MatButtonModule} from '@angular/material/button';
   exports: [
     SidenavComponent,
     HeaderComponent,
-    LoadingComponent
+    LoadingComponent,
+    ConfirmDialogComponent,
+    ToasterComponent
   ]
 })
 export class SharedModule { }
