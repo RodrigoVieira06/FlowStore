@@ -26,42 +26,6 @@
       }
     }
 
-    .grid-buttons {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-
-      button {
-        border-radius: 4px;
-        height: 40px;
-        width: 90%;
-        transition: filter 0.3s ease;
-        cursor: pointer;
-
-        &:hover {
-          filter: brightness(80%);
-          transition: filter 0.3s ease;
-        }
-      }
-
-      .cancel-button {
-        margin-right: 15%;
-        border: 1px solid $primary-color;
-        background-color: $contrast-color;
-        color: $primary-color;
-        font-weight: 700;
-        font-size: 14px;
-      }
-
-      .submit-button {
-        margin-left: 15%;
-        background-color: $primary-color;
-        color: $contrast-color;
-        font-weight: 700;
-        font-size: 14px;
-        border: 0;
-      }
-    }
-
     .input-group {
       position: relative;
 
@@ -95,6 +59,15 @@
         background: $input-background-color;
         outline: none;
 
+        &:read-only {
+          border-bottom: 1px solid $text-secundary-color;
+          cursor: default;
+
+          &:focus {
+            border-bottom: 1px solid $text-secundary-color;
+          }
+        }
+
         &:focus {
           border-bottom: 2px solid $primary-color;
 
@@ -102,10 +75,16 @@
             transform: scaleX(1);
           }
 
-          &:focus+label {
+          &+label {
             transform: translateY(-10px);
             font-size: 12px;
-            color: #26A382;
+            color: $primary-color;
+          }
+
+          &:read-only+label {
+            transform: translateY(0px);
+            font-size: 16px;
+            color: $text-secundary-color;
           }
         }
       }
@@ -114,6 +93,47 @@
         color: $error-color;
         font-size: 12px;
         margin-top: 5px;
+      }
+    }
+
+    .grid-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      button {
+        border-radius: 4px;
+        height: 40px;
+        width: 90%;
+        transition: filter 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(90%);
+          transition: filter 0.3s ease;
+        }
+
+        &:disabled {
+          filter: opacity(0.5);
+          cursor: default;
+        }
+      }
+
+      .cancel-button {
+        margin-right: 15%;
+        border: 1px solid $primary-color;
+        background-color: $contrast-color;
+        color: $primary-color;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .submit-button {
+        margin-left: 15%;
+        background-color: $primary-color;
+        color: $contrast-color;
+        font-weight: 700;
+        font-size: 14px;
+        border: 0;
       }
     }
   }

@@ -3,13 +3,17 @@
 
   <section class="form-group">
     <div class="input-group">
-      <input id="cnpj" formControlName="cnpj" type="text" maxlength="14" required />
+      <input id="cnpj" formControlName="cnpj" type="text" mask="00.000.000/0000-00" />
       <label [ngClass]="{'active': manufacturerForm.get('cnpj')?.value}">CNPJ *</label>
       <span class="underline"></span>
       <span class="error-container" *ngIf="manufacturerForm.get('cnpj')!.invalid">
         <p
           *ngIf="manufacturerForm.get('cnpj')!.value === '' && (manufacturerForm.get('cnpj')!.dirty || manufacturerForm.get('cnpj')!.touched)">
           O CNPJ é obrigatório
+        </p>
+        <p
+          *ngIf="manufacturerForm.get('cnpj')!.value !== '' && (manufacturerForm.get('cnpj')!.dirty || manufacturerForm.get('cnpj')!.touched)">
+          CNPJ inválido
         </p>
       </span>
     </div>
@@ -27,7 +31,23 @@
     </div>
 
     <div class="input-group">
-      <input id="cep" formControlName="cep" type="text" maxlength="30" />
+      <input id="contato" formControlName="contato" type="text" maxlength="30" />
+      <label [ngClass]="{'active': manufacturerForm.get('contato')?.value}">E-mail *</label>
+      <span class="underline"></span>
+      <span class="error-container" *ngIf="manufacturerForm.get('contato')!.invalid">
+        <p
+          *ngIf="manufacturerForm.get('contato')!.value === '' && (manufacturerForm.get('contato')!.dirty || manufacturerForm.get('contato')!.touched)">
+          O e-mail é obrigatório
+        </p>
+        <p
+          *ngIf="manufacturerForm.get('contato')!.value !== '' && (manufacturerForm.get('contato')!.dirty || manufacturerForm.get('contato')!.touched)">
+          E-mail inválido
+        </p>
+      </span>
+    </div>
+
+    <div class="input-group">
+      <input id="cep" formControlName="cep" type="text" mask="00000-000" />
       <label [ngClass]="{'active': manufacturerForm.get('cep')?.value}">CEP *</label>
       <span class="underline"></span>
       <span class="error-container" *ngIf="manufacturerForm.get('cep')!.invalid">
@@ -35,24 +55,17 @@
           *ngIf="manufacturerForm.get('cep')!.value === '' && (manufacturerForm.get('cep')!.dirty || manufacturerForm.get('cep')!.touched)">
           O CEP é obrigatório
         </p>
-      </span>
-    </div>
-
-    <div class="input-group">
-      <input id="endereco" formControlName="endereco" type="text" maxlength="30" />
-      <label [ngClass]="{'active': manufacturerForm.get('endereco')?.value}">Endereço *</label>
-      <span class="underline"></span>
-      <span class="error-container" *ngIf="manufacturerForm.get('endereco')!.invalid">
         <p
-          *ngIf="manufacturerForm.get('endereco')!.value === '' && (manufacturerForm.get('endereco')!.dirty || manufacturerForm.get('endereco')!.touched)">
-          O endereço é obrigatório
+          *ngIf="manufacturerForm.get('cep')!.value !== '' && (manufacturerForm.get('cep')!.dirty || manufacturerForm.get('cep')!.touched)">
+          CEP inválido
         </p>
       </span>
     </div>
 
     <div class="grid-form">
+
       <div class="input-group">
-        <input id="numero" formControlName="numero" type="text" maxlength="30" />
+        <input id="numero" formControlName="numero" type="text" maxlength="5" />
         <label [ngClass]="{'active': manufacturerForm.get('numero')?.value}">Número *</label>
         <span class="underline"></span>
         <span class="error-container" *ngIf="manufacturerForm.get('numero')!.invalid">
@@ -64,7 +77,7 @@
       </div>
 
       <div class="input-group">
-        <input id="complemento" formControlName="complemento" type="text" maxlength="30" />
+        <input id="complemento" formControlName="complemento" type="text" maxlength="15" />
         <label [ngClass]="{'active': manufacturerForm.get('complemento')?.value}">Complemento</label>
         <span class="underline"></span>
         <span class="error-container" *ngIf="manufacturerForm.get('complemento')!.invalid">
@@ -74,11 +87,33 @@
           </p>
         </span>
       </div>
-    </div>
 
-    <div class="grid-form">
       <div class="input-group">
-        <input id="cidade" formControlName="cidade" type="text" maxlength="30" />
+        <input id="logradouro" formControlName="logradouro" type="text" maxlength="50" readonly />
+        <label [ngClass]="{'active': manufacturerForm.get('logradouro')?.value}">Logradouro *</label>
+        <span class="underline"></span>
+        <span class="error-container" *ngIf="manufacturerForm.get('logradouro')!.invalid">
+          <p
+            *ngIf="manufacturerForm.get('logradouro')!.value === '' && (manufacturerForm.get('logradouro')!.dirty || manufacturerForm.get('logradouro')!.touched)">
+            O logradouro é obrigatório
+          </p>
+        </span>
+      </div>
+
+      <div class="input-group">
+        <input id="bairro" formControlName="bairro" type="text" readonly />
+        <label [ngClass]="{'active': manufacturerForm.get('bairro')?.value}">Bairro</label>
+        <span class="underline"></span>
+        <span class="error-container" *ngIf="manufacturerForm.get('bairro')!.invalid">
+          <p
+            *ngIf="manufacturerForm.get('bairro')!.value === '' && (manufacturerForm.get('bairro')!.dirty || manufacturerForm.get('bairro')!.touched)">
+            O bairro é obrigatório
+          </p>
+        </span>
+      </div>
+
+      <div class="input-group">
+        <input id="cidade" formControlName="cidade" type="text" readonly />
         <label [ngClass]="{'active': manufacturerForm.get('cidade')?.value}">Cidade</label>
         <span class="underline"></span>
         <span class="error-container" *ngIf="manufacturerForm.get('cidade')!.invalid">
@@ -90,7 +125,7 @@
       </div>
 
       <div class="input-group">
-        <input id="estado" formControlName="estado" type="text" maxlength="30" />
+        <input id="estado" formControlName="estado" type="text" readonly />
         <label [ngClass]="{'active': manufacturerForm.get('estado')?.value}">Estado</label>
         <span class="underline"></span>
         <span class="error-container" *ngIf="manufacturerForm.get('estado')!.invalid">
@@ -104,7 +139,7 @@
 
     <div class="grid-buttons">
       <button class="cancel-button" [routerLink]="['/manufacturers']">CANCELAR</button>
-      <button class="submit-button" type="submit">SALVAR</button>
+      <button class="submit-button" type="submit" [disabled]="manufacturerForm.invalid">SALVAR</button>
     </div>
   </section>
 

@@ -44,6 +44,11 @@ export class ManufacturersService {
     return this.http.get<PaginatedResponse<Manufacturer>>(url);
   }
 
+  public createManufacturers(entity: Manufacturer): Observable<Manufacturer> {
+    const url = this.base_url + this.main_endpoint;
+
+    return this.http.post<Manufacturer>(url, entity);
+  }
 
   public deleteManufacturers(id: string): Observable<Manufacturer> {
     const url = this.base_url + this.main_endpoint + '/' + id;

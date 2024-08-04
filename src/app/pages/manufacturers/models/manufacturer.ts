@@ -1,14 +1,14 @@
 export interface Manufacturer {
-  bairro: string;
-  cep: string;
-  cidade: string;
-  cnpj: string;
-  complemento: string;
-  contato: string;
-  contatoTipo: string;
-  estado: string;
-  id: number;
-  logradouro: string;
   nome: string;
+  cnpj: string;
+  cep: string;
+  logradouro: string;
   numero: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  contatoTipo: string;
+  contato: string;
+  id: number;
 }
