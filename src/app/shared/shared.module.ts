@@ -9,6 +9,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { ToasterComponent } from './components/toaster/toaster.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ToasterComponent } from './components/toaster/toaster.component';
     MatDialogClose,
     MatDialogTitle,
     MatDialogContent,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   exports: [
     SidenavComponent,

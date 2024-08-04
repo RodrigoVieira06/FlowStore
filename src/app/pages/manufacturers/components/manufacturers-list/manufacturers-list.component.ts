@@ -107,7 +107,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
             this.loadingService.hide()
             this.toasterService.showToast(`O fabricante ${manufacturer} foi deletado com sucesso`, 'success');
           },
-          error: (error) => {
+          error: () => {
             this.loadingService.hide()
             this.toasterService.showToast(`Ocorreu um erro ao tentar deletar o fabricante ${manufacturer}`, 'error');
           }

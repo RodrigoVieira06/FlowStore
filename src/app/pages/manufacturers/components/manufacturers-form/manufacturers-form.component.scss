@@ -1,0 +1,120 @@
+@import '../../../../../../public/assets/styles/colors';
+
+.manufacturer-form-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $contrast-color;
+  padding: 32px;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    gap: 36px;
+    padding-bottom: 32px;
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      :nth-child(1) {
+        margin-right: 15%;
+      }
+
+      :nth-child(0) {
+        margin-left: 15%;
+      }
+    }
+
+    .grid-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      button {
+        border-radius: 4px;
+        height: 40px;
+        width: 90%;
+        transition: filter 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(80%);
+          transition: filter 0.3s ease;
+        }
+      }
+
+      .cancel-button {
+        margin-right: 15%;
+        border: 1px solid $primary-color;
+        background-color: $contrast-color;
+        color: $primary-color;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .submit-button {
+        margin-left: 15%;
+        background-color: $primary-color;
+        color: $contrast-color;
+        font-weight: 700;
+        font-size: 14px;
+        border: 0;
+      }
+    }
+
+    .input-group {
+      position: relative;
+
+      label {
+        padding-left: 10px;
+        position: absolute;
+        font-size: 16px;
+        color: $text-secundary-color;
+        pointer-events: none;
+        left: 5px;
+        top: 20px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+
+        &.active {
+          transform: translateY(-10px);
+          font-size: 12px;
+        }
+      }
+
+      input {
+        width: 100%;
+        height: 42px;
+        padding-inline: 15px;
+        padding-top: 15px;
+        margin-bottom: 5px;
+        font-size: 16px;
+        border: none;
+        border-bottom: 1px solid $primary-color;
+        background: $input-background-color;
+        outline: none;
+
+        &:focus {
+          border-bottom: 2px solid $primary-color;
+
+          &+.underline {
+            transform: scaleX(1);
+          }
+
+          &:focus+label {
+            transform: translateY(-10px);
+            font-size: 12px;
+            color: #26A382;
+          }
+        }
+      }
+
+      .error-container {
+        color: $error-color;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+    }
+  }
+}

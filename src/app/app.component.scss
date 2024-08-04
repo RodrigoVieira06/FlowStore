@@ -5,6 +5,8 @@
 
   &__sidenav {
     width: 260px;
+    background-color: $contrast-color;
+    border-radius: 0;
   }
 
   &__content {
