@@ -7,9 +7,10 @@ import { SharedModule } from './shared/shared.module';
 import { ProductsModule } from './pages/products/products.module';
 import { ManufacturersModule } from './pages/manufacturers/manufacturers.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent]
 })
