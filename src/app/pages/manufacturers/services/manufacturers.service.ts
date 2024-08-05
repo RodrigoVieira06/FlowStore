@@ -50,6 +50,12 @@ export class ManufacturersService {
     return this.http.post<Manufacturer>(url, entity);
   }
 
+  public editManufacturers(entity: Manufacturer): Observable<Manufacturer> {
+    const url = this.base_url + this.main_endpoint;
+
+    return this.http.put<Manufacturer>(url, entity);
+  }
+
   public deleteManufacturers(id: string): Observable<Manufacturer> {
     const url = this.base_url + this.main_endpoint + '/' + id;
 

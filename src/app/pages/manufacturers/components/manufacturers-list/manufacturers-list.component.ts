@@ -9,6 +9,7 @@ import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog
 import { isInteger } from '../../../../shared/utils/utils';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
 import { formatCnpj } from '../../../../shared/utils/utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manufacturers-list-component',
@@ -33,10 +34,11 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
-    public loadingService: LoadingService,
+    private loadingService: LoadingService,
     private manufacturersService: ManufacturersService,
     private confirmDialogService: ConfirmDialogService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -93,6 +95,10 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
       })
 
     this.subscriptions.add(subscription);
+  }
+
+  public editManufacturer(cnpj: string): void {
+    this.router.navigate(['/manufacturers/edit', cnpj]);
   }
 
   public deleteManufacturers(id: string, manufacturer: string): void {
