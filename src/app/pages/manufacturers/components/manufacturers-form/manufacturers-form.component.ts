@@ -102,10 +102,9 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   }
 
   public createManufacturer(): void {
-    let subscription: Subscription;
-
     this.loadingService.show();
-    subscription = this.manufacturersService.createManufacturer(this.manufacturerForm.value)
+
+    const subscription = this.manufacturersService.createManufacturer(this.manufacturerForm.value)
       .subscribe({
         next: () => {
           this.toasterService.showToast('Fabricante cadastrado com sucesso', 'success');
@@ -122,10 +121,9 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   }
 
   public editManufacturer(): void {
-    let subscription: Subscription;
-
     this.loadingService.show();
-    subscription = this.manufacturersService.editManufacturer(this.manufacturerForm.value)
+
+    const subscription = this.manufacturersService.editManufacturer(this.manufacturerForm.value)
       .subscribe({
         next: () => {
           this.toasterService.showToast('Fabricante alterado com sucesso', 'success');

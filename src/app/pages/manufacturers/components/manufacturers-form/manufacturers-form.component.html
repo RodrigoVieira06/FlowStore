@@ -76,7 +76,8 @@
       </div>
 
       <div class="field-group">
-        <input id="complemento" formControlName="complemento" type="text" maxlength="15" [readOnly]="action === 'show'" />
+        <input id="complemento" formControlName="complemento" type="text" maxlength="15"
+          [readOnly]="action === 'show'" />
         <label [ngClass]="{'active': manufacturerForm.get('complemento')?.value}">Complemento</label>
         <span class="underline"></span>
         <span class="field-group__error-group" *ngIf="manufacturerForm.get('complemento')!.invalid">
@@ -137,8 +138,10 @@
     </div>
 
     <div class="grid-buttons">
-      <button class="cancel-button" [routerLink]="['/products']" *ngIf="action !== 'show'">CANCELAR</button>
-      <button class="cancel-button" [routerLink]="['/products']" *ngIf="action === 'show'">VOLTAR</button>
+      <button class="cancel-button" [routerLink]="['/manufacturers']" *ngIf="action === 'show'">VOLTAR</button>
+      <button class="cancel-button" [routerLink]="['/manufacturers']" *ngIf="action !== 'show'">CANCELAR</button>
+
+      <button class="submit-button" [routerLink]="['/manufacturers/edit/', manufacturerForm.get('cnpj')?.value]" *ngIf="action === 'show'">EDITAR</button>
       <button class="submit-button" type="submit" [disabled]="manufacturerForm.invalid"
         *ngIf="action !== 'show'">SALVAR</button>
     </div>
