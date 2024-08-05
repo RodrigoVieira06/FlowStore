@@ -9,7 +9,8 @@ const routes: Routes = [
     path: '', component: ManufacturersComponent, children: [
       { path: '', component: ManufacturersListComponent },
       { path: 'create', component: ManufacturersFormComponent },
-      { path: 'edit/:cnpj', component: ManufacturersFormComponent }
+      { path: 'edit/:cnpj', component: ManufacturersFormComponent },
+      { path: 'show/:cnpj', component: ManufacturersFormComponent }
     ]
   },
 ];

@@ -38,7 +38,7 @@ export class ProductsFormComponent {
   ) { }
 
   ngOnInit(): void {
-    this.verifyIsEditForm();
+    this.verifyFormAction();
   }
 
   ngOnDestroy(): void {
@@ -143,7 +143,7 @@ export class ProductsFormComponent {
     this.subscriptions.add(subscription);
   }
 
-  private verifyIsEditForm(): void {
+  private verifyFormAction(): void {
     const barCode = this.activeRoute.snapshot.paramMap.get('barcode');
 
     if (!barCode) {

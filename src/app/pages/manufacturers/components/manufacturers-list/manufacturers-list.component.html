@@ -21,6 +21,7 @@
             {{ entity.logradouro }}, {{entity.numero}}, {{entity.cidade}}, {{entity.estado}}, {{entity.cep}}
           </td>
           <td class="actions">
+            <img src="/assets/icons/eye.svg" alt="show" (click)="showManufacturer(entity.cnpj)">
             <img src="/assets/icons/edit.svg" alt="edit" (click)="editManufacturer(entity.cnpj)">
             <img src="/assets/icons/trash.svg" alt="delete" (click)="openDeleteManufacturersDialog(entity)">
           </td>

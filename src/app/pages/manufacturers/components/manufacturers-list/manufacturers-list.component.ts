@@ -97,6 +97,10 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(subscription);
   }
 
+  public showManufacturer(cnpj: string): void {
+    this.router.navigate(['/manufacturers/show', cnpj]);
+  }
+
   public editManufacturer(cnpj: string): void {
     this.router.navigate(['/manufacturers/edit', cnpj]);
   }

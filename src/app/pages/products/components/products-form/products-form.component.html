@@ -1,7 +1,7 @@
 <form class="product-form-container" [formGroup]="productForm" (ngSubmit)="onSubmit()" [formGroup]="productForm">
   <section class="form-group">
     <div class="field-group">
-      <input class="custom-input" id="nome" formControlName="nome" type="text" [readOnly]="action === 'show'" />
+      <input id="nome" formControlName="nome" type="text" [readOnly]="action === 'show'" />
       <label [ngClass]="{'active': productForm.get('nome')?.value}">Produto *</label>
       <span class="underline"></span>
       <span class="field-group__error-group" *ngIf="productForm.get('nome')!.invalid">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="field-group">
-      <input class="custom-select" id="fabricanteCNPJ" formControlName="fabricanteCNPJ" type="text"
+      <input id="fabricanteCNPJ" formControlName="fabricanteCNPJ" type="text"
         mask="00.000.000/0000-00" [readOnly]="action === 'show'">
       <label [ngClass]="{'active': productForm.get('fabricanteCNPJ')?.value}">Fabricante (CNPJ) *</label>
       <span class="underline"></span>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="field-group">
-      <input class="custom-input" id="codigoBarras" formControlName="codigoBarras" type="text" maxlength="13"
+      <input id="codigoBarras" formControlName="codigoBarras" type="text" maxlength="13"
         [readOnly]="action !== 'create'" />
       <label [ngClass]="{'active': productForm.get('codigoBarras')?.value}">Código de Barras *</label>
       <span class="underline"></span>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="field-group">
-      <textarea class="custom-textarea" id="descricao" formControlName="descricao" type="text"
+      <textarea id="descricao" formControlName="descricao" type="text"
         [readOnly]="action === 'show'"></textarea>
       <label [ngClass]="{'active': productForm.get('descricao')?.value}">Descrição *</label>
       <span class="underline"></span>

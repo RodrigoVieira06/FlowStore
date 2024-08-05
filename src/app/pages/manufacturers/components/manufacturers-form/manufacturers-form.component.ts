@@ -6,7 +6,7 @@ import { Cep } from '../../../../shared/models/cep';
 import { LoadingService } from '../../../../shared/services/loading/loading.service';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
 import { ManufacturersService } from '../../services/manufacturers.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { PaginatedResponse } from '../../../../shared/models/paginated-response';
 import { Manufacturer } from '../../models/manufacturer';
 
@@ -30,7 +30,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     contatoTipo: new FormControl('Email')
   });
 
-  public action: 'create' | 'edit' = 'create';
+  public action: 'create' | 'edit' | 'show' = 'create';
 
   private subscriptions = new Subscription();
 
@@ -42,7 +42,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private toasterService: ToasterService
   ) {
-    this.verifyIsEditForm();
+    this.verifyFormAction();
   }
 
   ngOnInit(): void {
@@ -160,6 +160,8 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     this.manufacturerForm.get('cidade')?.setValue('');
     this.manufacturerForm.get('estado')?.setValue('');
     this.manufacturerForm.get('bairro')?.setValue('');
+    this.manufacturerForm.get('numero')?.setValue('');
+    this.manufacturerForm.get('complemento')?.setValue('');
   }
 
   private fillInAddressFields(values: Cep): void {
@@ -169,12 +171,18 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     this.manufacturerForm.get('bairro')?.setValue(values.bairro);
   }
 
-  private verifyIsEditForm(): void {
+  private verifyFormAction(): void {
     const cnpj = this.activeRoute.snapshot.paramMap.get('cnpj');
-    if (cnpj) {
-      this.action = 'edit';
-      this.getManufacturer(cnpj);
+
+    if (!cnpj) {
+      return;
     }
+
+    const urlSegments: UrlSegment[] = this.activeRoute.snapshot.url;
+
+    this.action = urlSegments[0].path === 'edit' ? 'edit' : 'show';
+
+    this.getManufacturer(cnpj);
   }
 
   private setFormData(data: Manufacturer): void {
