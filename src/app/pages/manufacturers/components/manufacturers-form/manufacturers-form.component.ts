@@ -86,7 +86,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   public getManufacturer(cnpj: string): void {
     this.loadingService.show();
 
-    const subscription = this.manufacturersService.searchByCNPJManufacturers(1, 1, cnpj)
+    const subscription = this.manufacturersService.searchManufacturersByCNPJ(1, 1, cnpj)
       .subscribe({
         next: (response: PaginatedResponse<Manufacturer>) => {
           this.setFormData(response.content[0]);
@@ -105,7 +105,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     let subscription: Subscription;
 
     this.loadingService.show();
-    subscription = this.manufacturersService.createManufacturers(this.manufacturerForm.value)
+    subscription = this.manufacturersService.createManufacturer(this.manufacturerForm.value)
       .subscribe({
         next: () => {
           this.toasterService.showToast('Fabricante cadastrado com sucesso', 'success');
@@ -125,7 +125,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     let subscription: Subscription;
 
     this.loadingService.show();
-    subscription = this.manufacturersService.editManufacturers(this.manufacturerForm.value)
+    subscription = this.manufacturersService.editManufacturer(this.manufacturerForm.value)
       .subscribe({
         next: () => {
           this.toasterService.showToast('Fabricante alterado com sucesso', 'success');

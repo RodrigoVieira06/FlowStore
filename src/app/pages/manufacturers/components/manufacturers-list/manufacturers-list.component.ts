@@ -58,7 +58,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
         next: (response: PaginatedResponse<Manufacturer>) => {
           this.updatecomponent(response);
         },
-        error: (error) => {
+        error: () => {
           this.toasterService.showToast('Ocorreu um erro ao listar os fabricantes', 'error');
         },
         complete: () => this.loadingService.hide()
@@ -77,10 +77,10 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
         }
 
         if (value.length === 14 && isInteger(value)) {
-          return this.manufacturersService.searchByCNPJManufacturers(this.pageSize, this.currentPage, value);
+          return this.manufacturersService.searchManufacturersByCNPJ(this.pageSize, this.currentPage, value);
         }
 
-        return this.manufacturersService.searchByNameManufacturers(this.pageSize, this.currentPage, value);
+        return this.manufacturersService.searchManufacturersByName(this.pageSize, this.currentPage, value);
       })
     )
       .subscribe({
@@ -104,7 +104,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   public deleteManufacturers(id: string, manufacturer: string): void {
     this.loadingService.show();
 
-    const subscription = this.manufacturersService.deleteManufacturers(id)
+    const subscription = this.manufacturersService.deleteManufacturer(id)
       .subscribe(
         {
           next: () => {

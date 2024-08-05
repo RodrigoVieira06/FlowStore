@@ -1,1 +1,69 @@
-<p>products-list-component works!</p>
+<main class="products-container">
+  <section class="products-container__actions">
+    <input class="products-container__actions--find" placeholder="Busca" type="text" [formControl]="searchControl">
+    <button class="products-container__actions--createButton"
+      [routerLink]="['/products/create']">CADASTRAR</button>
+  </section>
+  <section class="table-container">
+    <table class="table-container__table">
+      <thead class="table-container__table--head">
+        <tr>
+          <th>PRODUTO <img src="/assets/icons/arrow-up.svg" alt="arrow-up"></th>
+          <th>FABRICANTE</th>
+          <th>DESCRIÇÃO</th>
+          <th>AÇÃO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entity of entities">
+          <td>
+            <p>{{ entity.nome }}</p>
+            <p class="subtitle">{{entity.codigoBarras}}</p>
+           </td>
+          <td>
+            {{entity.fabricante.nome}}
+          </td>
+          <td>
+            {{entity.descricao}}
+          </td>
+          <td class="actions">
+            <img src="/assets/icons/edit.svg" alt="edit" (click)="editProduct(entity.codigoBarras)">
+            <img src="/assets/icons/trash.svg" alt="delete" (click)="openDeleteProductsDialog(entity)">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <section class="table-container__empty-table" *ngIf="entities.length === 0">
+      <img class="table-container__empty-table--image" src="/assets/icons/table.svg" alt="table">
+      <h1 class="table-container__empty-table--title">Nenhum cadastro encontrado</h1>
+      <p class="table-container__empty-table--info">Adicione dados utilizando o botão cadastrar.</p>
+    </section>
+    <span class="table-container__pagination">
+      <div class="table-container__pagination--pageSizeControl">
+        <p>Showing</p>
+        <select (change)="changePageSize($event)">
+          <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+        </select>
+        <p>of {{pageConfig?.totalElements}}</p>
+      </div>
+      <div class="table-container__pagination--pageControl">
+        <button (click)="prevPage()" [disabled]="currentPage === 0">
+          <img src="/assets/icons/left-chevron.svg" alt="left">
+        </button>
+        <button *ngIf="currentPage > 2" (click)="goToPage(1)" [class.active]="0 === currentPage">1</button>
+        <span *ngIf="showStartEllipsis">...</span>
+        <button *ngFor="let page of visiblePages" (click)="goToPage(page)" [class.active]="page === (currentPage + 1)">
+          {{ page }}
+        </button>
+        <span *ngIf="showEndEllipsis">...</span>
+        <button *ngIf="totalPages > 5 && (currentPage + 1) <= totalPages - 3" (click)="goToPage(totalPages)"
+          [class.active]="totalPages === (currentPage + 1)">
+          {{ totalPages }}
+        </button>
+        <button (click)="nextPage()" [disabled]="(currentPage + 1) === totalPages">
+          <img src="/assets/icons/right-chevron.svg" alt="right">
+        </button>
+      </div>
+    </span>
+  </section>
+</main>
