@@ -3,7 +3,8 @@ import { Manufacturer } from "../../manufacturers/models/manufacturer";
 export interface Product {
   codigoBarras: string;
   descricao: string;
-  id: number;
+  id?: number;
   nome: string;
-  fabricante: Manufacturer
+  fabricante?: Manufacturer
+  fabricanteID?: number
 }

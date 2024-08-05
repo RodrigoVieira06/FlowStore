@@ -1,0 +1,145 @@
+@import './colors';
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+
+  .grid-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .field-group {
+    position: relative;
+
+    label {
+      padding-left: 10px;
+      position: absolute;
+      font-size: 16px;
+      color: $text-secundary-color;
+      pointer-events: none;
+      left: 5px;
+      top: 20px;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+
+      &.active {
+        transform: translateY(-10px);
+        font-size: 12px;
+      }
+    }
+
+    input {
+      height: 42px;
+      padding-top: 15px;
+    }
+
+    textarea {
+      height: 100px;
+      padding-top: 25px;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    input,
+    textarea {
+      width: calc(100% - 20px);
+      padding-inline: 10px;
+      margin-bottom: 5px;
+      font-size: 16px;
+      border: none;
+      border-bottom: 1px solid $primary-color;
+      background: $input-background-color;
+      outline: none;
+
+      &:hover {
+        filter: brightness(90%);
+        transition: filter 0.3s ease-in-out;
+      }
+
+      &:read-only {
+        color: $text-secundary-color;
+        border-bottom: 1px solid $text-secundary-color;
+        cursor: default;
+
+        &:focus {
+          border-bottom: 1px solid $text-secundary-color;
+          filter: brightness(100%);
+        }
+
+        &:hover {
+          filter: brightness(100%);
+        }
+      }
+
+      &:focus {
+        border-bottom: 2px solid $primary-color;
+        filter: brightness(90%);
+
+        &+.underline {
+          transform: scaleX(1);
+        }
+
+        &+label {
+          transform: translateY(-10px);
+          font-size: 12px;
+          color: $primary-color;
+        }
+      }
+    }
+
+    &__error-group {
+      color: $error-color;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .grid-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+
+    @media (min-width: 700px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px;
+    }
+
+    button {
+      border-radius: 4px;
+      height: 40px;
+      width: 100%;
+      transition: filter 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(90%);
+        transition: filter 0.3s ease;
+      }
+
+      &:disabled {
+        filter: opacity(0.5);
+        cursor: default;
+      }
+    }
+
+    .cancel-button {
+      border: 1px solid $primary-color;
+      background-color: $contrast-color;
+      color: $primary-color;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .submit-button {
+      background-color: $primary-color;
+      color: $contrast-color;
+      font-weight: 700;
+      font-size: 14px;
+      border: 0;
+    }
+  }
+}

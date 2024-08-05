@@ -24,11 +24,10 @@ export class ProductsService {
   }
 
   public searchProductsByBarcode(code: string, pageSize: number = 10, pageIndex: number = 0): Observable<PaginatedResponse<Product>> {
-    const nameParam: string = `nome=${code}`;
     const pageSizeParam: string = `pageSize=${pageSize}`;
     const pageIndexParam: string = `initialPage=${pageIndex}`;
 
-    const url = `${this.base_url}/${nameParam}?${pageSizeParam}&${pageIndexParam}`;
+    const url = `${this.base_url}${this.main_endpoint}/${code}?${pageSizeParam}&${pageIndexParam}`;
 
     return this.http.get<PaginatedResponse<Product>>(url);
   }

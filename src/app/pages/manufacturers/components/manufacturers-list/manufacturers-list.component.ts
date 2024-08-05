@@ -77,10 +77,10 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
         }
 
         if (value.length === 14 && isInteger(value)) {
-          return this.manufacturersService.searchManufacturersByCNPJ(this.pageSize, this.currentPage, value);
+          return this.manufacturersService.searchManufacturersByCNPJ(value, this.pageSize, this.currentPage);
         }
 
-        return this.manufacturersService.searchManufacturersByName(this.pageSize, this.currentPage, value);
+        return this.manufacturersService.searchManufacturersByName(value, this.pageSize, this.currentPage);
       })
     )
       .subscribe({

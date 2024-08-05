@@ -24,7 +24,7 @@ export class ManufacturersService {
     return this.http.get<PaginatedResponse<Manufacturer>>(url);
   }
 
-  public searchManufacturersByName(pageSize: number = 10, pageIndex: number = 0, name?: string): Observable<PaginatedResponse<Manufacturer>> {
+  public searchManufacturersByName(name: string, pageSize: number = 10, pageIndex: number = 0): Observable<PaginatedResponse<Manufacturer>> {
     const nameParam: string = `nome=${name}`;
     const pageSizeParam: string = `pageSize=${pageSize}`;
     const pageIndexParam: string = `initialPage=${pageIndex}`;
@@ -34,7 +34,7 @@ export class ManufacturersService {
     return this.http.get<PaginatedResponse<Manufacturer>>(url);
   }
 
-  public searchManufacturersByCNPJ(pageSize: number = 10, pageIndex: number = 0, cnpj?: string): Observable<PaginatedResponse<Manufacturer>> {
+  public searchManufacturersByCNPJ(cnpj: string, pageSize: number = 10, pageIndex: number = 0): Observable<PaginatedResponse<Manufacturer>> {
     const pageSizeParam: string = `pageSize=${pageSize}`;
     const pageIndexParam: string = `initialPage=${pageIndex}`;
 

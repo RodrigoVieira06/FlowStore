@@ -90,6 +90,10 @@ export class ProductsListComponent {
     this.subscriptions.add(subscription);
   }
 
+  public showProduct(barcode: string): void {
+    this.router.navigate(['/products/show', barcode]);
+  }
+
   public editProduct(barcode: string): void {
     this.router.navigate(['/products/edit', barcode]);
   }
@@ -124,7 +128,7 @@ export class ProductsListComponent {
     const subscribe = dialogRef.afterClosed()
       .subscribe((result: boolean) => {
         if (result) {
-          this.deleteProducts(product.id.toString(), product.nome);
+          this.deleteProducts(product.id!.toString(), product.nome);
         }
       });
 

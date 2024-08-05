@@ -3,7 +3,7 @@
 
   <section class="form-group">
     <div class="input-group">
-      <input id="cnpj" formControlName="cnpj" type="text" mask="00.000.000/0000-00" />
+      <input id="cnpj" formControlName="cnpj" type="text" mask="00.000.000/0000-00" [readOnly]="action !== 'create'"/>
       <label [ngClass]="{'active': manufacturerForm.get('cnpj')?.value}">CNPJ *</label>
       <span class="underline"></span>
       <span class="error-container" *ngIf="manufacturerForm.get('cnpj')!.invalid">

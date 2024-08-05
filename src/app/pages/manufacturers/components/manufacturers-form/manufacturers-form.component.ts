@@ -86,7 +86,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   public getManufacturer(cnpj: string): void {
     this.loadingService.show();
 
-    const subscription = this.manufacturersService.searchManufacturersByCNPJ(1, 1, cnpj)
+    const subscription = this.manufacturersService.searchManufacturersByCNPJ(cnpj, 1, 0)
       .subscribe({
         next: (response: PaginatedResponse<Manufacturer>) => {
           this.setFormData(response.content[0]);

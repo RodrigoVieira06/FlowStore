@@ -6,6 +6,7 @@ import { ProductsListComponent } from './components/products-list/products-list.
 import { ProductsComponent } from './products.component';
 import { SharedModule } from "../../shared/shared.module";
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 
 
@@ -19,7 +20,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AppRoutingProductsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NgxMaskPipe
 ],
   exports: [
     ProductsFormComponent,

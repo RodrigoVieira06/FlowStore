@@ -1,0 +1,12 @@
+@import '../../../../../../public/assets/styles/colors';
+
+.product-form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: $contrast-color;
+  padding: 32px;
+
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

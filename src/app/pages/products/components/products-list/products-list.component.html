@@ -21,12 +21,13 @@
             <p class="subtitle">{{entity.codigoBarras}}</p>
            </td>
           <td>
-            {{entity.fabricante.nome}}
+            {{entity.fabricante!.nome}}
           </td>
           <td>
             {{entity.descricao}}
           </td>
           <td class="actions">
+            <img src="/assets/icons/eye.svg" alt="show" (click)="showProduct(entity.codigoBarras)">
             <img src="/assets/icons/edit.svg" alt="edit" (click)="editProduct(entity.codigoBarras)">
             <img src="/assets/icons/trash.svg" alt="delete" (click)="openDeleteProductsDialog(entity)">
           </td>

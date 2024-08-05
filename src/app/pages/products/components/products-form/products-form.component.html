@@ -1,1 +1,66 @@
-<p>products-form-component works!</p>
+<form class="product-form-container" [formGroup]="productForm" (ngSubmit)="onSubmit()" [formGroup]="productForm">
+  <section class="form-group">
+    <div class="field-group">
+      <input class="custom-input" id="nome" formControlName="nome" type="text" [readOnly]="action === 'show'" />
+      <label [ngClass]="{'active': productForm.get('nome')?.value}">Produto *</label>
+      <span class="underline"></span>
+      <span class="field-group__error-group" *ngIf="productForm.get('nome')!.invalid">
+        <p
+          *ngIf="productForm.get('nome')!.value === '' && (productForm.get('nome')!.dirty || productForm.get('nome')!.touched)">
+          O produto é obrigatório
+        </p>
+      </span>
+    </div>
+
+    <div class="field-group">
+      <input class="custom-select" id="fabricanteCNPJ" formControlName="fabricanteCNPJ" type="text"
+        mask="00.000.000/0000-00" [readOnly]="action === 'show'">
+      <label [ngClass]="{'active': productForm.get('fabricanteCNPJ')?.value}">Fabricante (CNPJ) *</label>
+      <span class="underline"></span>
+      <span class="field-group__error-group" *ngIf="productForm.get('fabricanteCNPJ')!.invalid">
+        <p
+          *ngIf="productForm.get('fabricanteCNPJ')!.value === '' && (productForm.get('fabricanteCNPJ')!.dirty || productForm.get('fabricanteCNPJ')!.touched)">
+          O CNPJ do fabricante é obrigatório
+        </p>
+        <p
+          *ngIf="productForm.get('fabricanteCNPJ')!.value !== '' && (productForm.get('fabricanteCNPJ')!.dirty || productForm.get('fabricanteCNPJ')!.touched)">
+          CNPJ inválido
+        </p>
+      </span>
+    </div>
+
+    <div class="field-group">
+      <input class="custom-input" id="codigoBarras" formControlName="codigoBarras" type="text" maxlength="13"
+        [readOnly]="action !== 'create'" />
+      <label [ngClass]="{'active': productForm.get('codigoBarras')?.value}">Código de Barras *</label>
+      <span class="underline"></span>
+      <span class="field-group__error-group" *ngIf="productForm.get('codigoBarras')!.invalid">
+        <p
+          *ngIf="productForm.get('codigoBarras')!.value === '' && (productForm.get('codigoBarras')!.dirty || productForm.get('codigoBarras')!.touched)">
+          O codigo de barras é obrigatório
+        </p>
+      </span>
+    </div>
+
+    <div class="field-group">
+      <textarea class="custom-textarea" id="descricao" formControlName="descricao" type="text"
+        [readOnly]="action === 'show'"></textarea>
+      <label [ngClass]="{'active': productForm.get('descricao')?.value}">Descrição *</label>
+      <span class="underline"></span>
+      <span class="field-group__error-group" *ngIf="productForm.get('descricao')!.invalid">
+        <p
+          *ngIf="productForm.get('descricao')!.value === '' && (productForm.get('descricao')!.dirty || productForm.get('descricao')!.touched)">
+          A descrição é obrigatória
+        </p>
+      </span>
+    </div>
+
+    <div class="grid-buttons">
+      <button class="cancel-button" [routerLink]="['/products']" *ngIf="action !== 'show'">CANCELAR</button>
+      <button class="cancel-button" [routerLink]="['/products']" *ngIf="action === 'show'">VOLTAR</button>
+      <button class="submit-button" type="submit" [disabled]="productForm.invalid"
+        *ngIf="action !== 'show'">SALVAR</button>
+    </div>
+  </section>
+
+</form>

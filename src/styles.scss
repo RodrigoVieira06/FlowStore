@@ -1,5 +1,8 @@
 @use '@angular/material' as mat;
+@use '../public/assets/styles/form-styles';
+
 @include mat.core();
+
 @import "../public/assets/styles/colors";
 
 
