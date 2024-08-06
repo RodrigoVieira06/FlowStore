@@ -13,18 +13,18 @@
     </div>
 
     <div class="field-group">
-      <input id="fabricanteCNPJ" formControlName="fabricanteCNPJ" type="text"
-        mask="00.000.000/0000-00" [readOnly]="action === 'show'">
-      <label [ngClass]="{'active': productForm.get('fabricanteCNPJ')?.value}">Fabricante (CNPJ) *</label>
-      <span class="underline"></span>
-      <span class="field-group__error-group" *ngIf="productForm.get('fabricanteCNPJ')!.invalid">
-        <p
-          *ngIf="productForm.get('fabricanteCNPJ')!.value === '' && (productForm.get('fabricanteCNPJ')!.dirty || productForm.get('fabricanteCNPJ')!.touched)">
-          O CNPJ do fabricante é obrigatório
-        </p>
-        <p
-          *ngIf="productForm.get('fabricanteCNPJ')!.value !== '' && (productForm.get('fabricanteCNPJ')!.dirty || productForm.get('fabricanteCNPJ')!.touched)">
-          CNPJ inválido
+      <input id="fabricanteID" type="text" [formControl]="fabricanteCNPJ" [matAutocomplete]="auto"
+        [readOnly]="action === 'show'">
+      <label [ngClass]="{'active': fabricanteCNPJ.value}">Fabricante *</label>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of manufacturersOptions" [value]="option.id">
+          <p>{{option.nome}}</p>
+          <p>{{option.cnpj | mask: '00.000.000/0000-00'}}</p>
+        </mat-option>
+      </mat-autocomplete>
+      <span class="field-group__error-group" *ngIf="fabricanteCNPJ.invalid">
+        <p *ngIf="fabricanteCNPJ.value === '' && (fabricanteCNPJ.dirty || fabricanteCNPJ.touched)">
+          O fabricante é obrigatório
         </p>
       </span>
     </div>
@@ -43,8 +43,7 @@
     </div>
 
     <div class="field-group">
-      <textarea id="descricao" formControlName="descricao" type="text"
-        [readOnly]="action === 'show'"></textarea>
+      <textarea id="descricao" formControlName="descricao" type="text" [readOnly]="action === 'show'"></textarea>
       <label [ngClass]="{'active': productForm.get('descricao')?.value}">Descrição *</label>
       <span class="underline"></span>
       <span class="field-group__error-group" *ngIf="productForm.get('descricao')!.invalid">
@@ -59,7 +58,8 @@
       <button class="cancel-button" [routerLink]="['/products']" *ngIf="action === 'show'">VOLTAR</button>
       <button class="cancel-button" [routerLink]="['/products']" *ngIf="action !== 'show'">CANCELAR</button>
 
-      <button class="submit-button" [routerLink]="['/products/edit/', productForm.get('codigoBarras')?.value]" *ngIf="action === 'show'">EDITAR</button>
+      <button class="submit-button" [routerLink]="['/products/edit/', productForm.get('codigoBarras')?.value]"
+        *ngIf="action === 'show'">EDITAR</button>
       <button class="submit-button" type="submit" [disabled]="productForm.invalid"
         *ngIf="action !== 'show'">SALVAR</button>
     </div>

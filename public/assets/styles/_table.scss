@@ -22,7 +22,7 @@
     display: none;
 
     @media (min-width: 700px) {
-      display: block;
+      display: table-cell;
     }
   }
 
@@ -44,6 +44,14 @@
       }
     }
 
+    .subtitle {
+      color: $text-secundary-color;
+    }
+
+    td {
+      word-break: break-all;
+    }
+
     th,
     td {
       text-align: start;
@@ -51,7 +59,6 @@
       padding-right: 26px;
       padding-block: 16px;
       border-bottom: 1px solid $line-table-color;
-      word-break: break-all;
 
       @media (max-width: 700px) {
         padding-inline: 10px;

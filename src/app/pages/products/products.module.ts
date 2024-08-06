@@ -7,6 +7,8 @@ import { ProductsComponent } from './products.component';
 import { SharedModule } from "../../shared/shared.module";
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -22,8 +24,10 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     SharedModule,
     ReactiveFormsModule,
     NgxMaskDirective,
-    NgxMaskPipe
-],
+    NgxMaskPipe,
+    MatAutocompleteModule,
+    MatInputModule,
+  ],
   exports: [
     ProductsFormComponent,
     ProductsListComponent

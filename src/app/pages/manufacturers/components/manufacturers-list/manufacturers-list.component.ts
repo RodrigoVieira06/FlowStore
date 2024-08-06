@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog/confirm-dialog.service';
 import { isInteger } from '../../../../shared/utils/utils';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
-import { formatCnpj } from '../../../../shared/utils/utils';
 import { Router } from '@angular/router';
 
 @Component({
@@ -219,9 +218,5 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     this.pageSize = Number(selectElement.value);
     this.currentPage = 0;
     this.getManufacturers();
-  }
-
-  public formatCnpj(cnpj: string): string {
-    return formatCnpj(cnpj);
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, Subscription, switchMap } from 'rxjs';
 import { PaginatedResponse } from '../../../../shared/models/paginated-response';
 import { LoadingService } from '../../../../shared/services/loading/loading.service';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
@@ -19,14 +19,19 @@ export class ProductsFormComponent {
   public productForm: FormGroup = new FormGroup({
     nome: new FormControl('', Validators.required),
     fabricanteID: new FormControl(''),
-    fabricanteCNPJ: new FormControl('', Validators.required),
     codigoBarras: new FormControl('', Validators.required),
     descricao: new FormControl('', Validators.required),
   });
 
+  public fabricanteCNPJ = new FormControl;
+
   public action: 'create' | 'edit' | 'show' = 'create';
 
   private subscriptions = new Subscription();
+
+  public manufacturersOptions: Manufacturer[] = [];
+  public pageSize = 10;
+  public pageIndex = 0;
 
   constructor(
     private productsService: ProductsService,
@@ -35,14 +40,48 @@ export class ProductsFormComponent {
     private activeRoute: ActivatedRoute,
     private loadingService: LoadingService,
     private toasterService: ToasterService
-  ) { }
+  ) {
+    this.fabricanteCNPJ.setValue('');
+    this.fabricanteCNPJ.addValidators(Validators.required);
+  }
 
   ngOnInit(): void {
     this.verifyFormAction();
+    this.getManufacturers();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  public onScroll(): void {
+    this.pageIndex++;
+
+    this.manufacturersService.searchManufacturersByName(this.productForm.get('fabricanteCNPJ')?.value, this.pageSize, this.pageIndex)
+      .subscribe((response: PaginatedResponse<Manufacturer>) => {
+        this.manufacturersOptions = [...this.manufacturersOptions, ...response.content];
+      });
+  }
+
+  public getManufacturers() {
+    this.fabricanteCNPJ.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((manufacturer: string) => {
+        this.loadingService.show();
+        return this.manufacturersService.searchManufacturersByName(manufacturer, this.pageSize, this.pageIndex);
+      })
+    )
+      .subscribe({
+        next: (response: PaginatedResponse<Manufacturer>) => {
+          this.manufacturersOptions = response.content;
+          this.loadingService.hide();
+        },
+        error: () => {
+          this.toasterService.showToast('Ocorreu um erro ao buscar os fabricantes', 'error');
+          this.loadingService.hide();
+        }
+      })
   }
 
   public onSubmit(): void {
@@ -52,44 +91,21 @@ export class ProductsFormComponent {
     }
 
     if (this.action === 'create') {
-      this.verifyManufacturer();
+      this.createProduct();
       return;
     }
 
     this.editProduct();
   }
 
-  public verifyManufacturer(): void {
-    this.loadingService.show();
-
-    const cnpj = this.productForm.get('fabricanteCNPJ')?.value;
-    const subscription = this.manufacturersService.searchManufacturersByCNPJ(cnpj, 1, 0)
-      .subscribe({
-        next: (response: PaginatedResponse<Manufacturer>) => {
-          if (response.content.length === 0) {
-            this.toasterService.showToast('Não foi possível encontrar o fabricante. Por favor, verifique o CNPJ fornecido', 'error');
-            return;
-          }
-
-          this.createProduct(response.content[0].id);
-        },
-        error: () => {
-          this.toasterService.showToast('Ocorreu um erro ao buscar o fabricante pelo CNPJ fornecido', 'error');
-          this.loadingService.hide();
-        },
-        complete: () => this.loadingService.hide()
-      });
-
-    this.subscriptions.add(subscription);
-  }
-
-  public createProduct(manufacturerID: number): void {
+  public createProduct(): void {
     let subscription: Subscription;
 
     this.loadingService.show();
-    const product = this.getProductObject(manufacturerID);
 
-    subscription = this.productsService.createProduct(product)
+    this.productForm.get('fabricanteID')?.setValue(this.fabricanteCNPJ.value);
+
+    subscription = this.productsService.createProduct(this.productForm.value)
       .subscribe({
         next: () => {
           this.toasterService.showToast('Produto cadastrado com sucesso', 'success');
@@ -160,19 +176,8 @@ export class ProductsFormComponent {
   private setFormData(data: Product): void {
     this.productForm.get('nome')?.setValue(data.nome);
     this.productForm.get('fabricanteID')?.setValue(data.fabricante?.id);
-    this.productForm.get('fabricanteCNPJ')?.setValue(data.fabricante?.cnpj);
+    this.fabricanteCNPJ.setValue(data.fabricante?.id);
     this.productForm.get('codigoBarras')?.setValue(data.codigoBarras);
     this.productForm.get('descricao')?.setValue(data.descricao);
-  }
-
-  private getProductObject(manufacturerID: number): Product {
-    const product: Product = {
-      nome: this.productForm.get('nome')?.value,
-      fabricanteID: manufacturerID,
-      codigoBarras: this.productForm.get('codigoBarras')?.value,
-      descricao: this.productForm.get('descricao')?.value
-    };
-
-    return product;
   }
 }
