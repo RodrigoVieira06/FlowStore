@@ -1,0 +1,17 @@
+@import './colors';
+
+.create-button {
+  width: 169px;
+  height: 40px;
+  font-weight: 700;
+  background-color: $primary-color;
+  color: $contrast-color;
+  border: 0;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+    transition: filter 0.3s ease;
+  }
+}

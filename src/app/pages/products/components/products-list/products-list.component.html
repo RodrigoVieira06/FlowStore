@@ -1,17 +1,16 @@
 <main class="products-container">
   <section class="products-container__actions">
-    <input class="products-container__actions--find" placeholder="Busca" type="text" [formControl]="searchControl">
-    <button class="products-container__actions--createButton"
-      [routerLink]="['/products/create']">CADASTRAR</button>
+    <input class="search-input" placeholder="Busca" type="text" [formControl]="searchControl">
+    <button class="create-button" [routerLink]="['/products/create']">CADASTRAR</button>
   </section>
   <section class="table-container">
     <table class="table-container__table">
       <thead class="table-container__table--head">
         <tr>
-          <th>PRODUTO <img src="/assets/icons/arrow-up.svg" alt="arrow-up"></th>
-          <th>FABRICANTE</th>
-          <th>DESCRIÇÃO</th>
-          <th>AÇÃO</th>
+          <th class="sortable">PRODUTO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
+          <th class="sortable">FABRICANTE <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'fabricanteID'"></th>
+          <th class="sortable">DESCRIÇÃO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'descricao'"></th>
+          <th class="sortable">AÇÃO</th>
         </tr>
       </thead>
       <tbody>
@@ -19,7 +18,7 @@
           <td>
             <p>{{ entity.nome }}</p>
             <p class="subtitle">{{entity.codigoBarras}}</p>
-           </td>
+          </td>
           <td>
             {{entity.fabricante!.nome}}
           </td>

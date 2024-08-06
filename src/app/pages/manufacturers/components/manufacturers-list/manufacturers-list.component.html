@@ -1,15 +1,15 @@
 <main class="manufacturers-container">
   <section class="manufacturers-container__actions">
-    <input class="manufacturers-container__actions--find" placeholder="Busca" type="text" [formControl]="searchControl">
-    <button class="manufacturers-container__actions--createButton" [routerLink]="['/manufacturers/create']">CADASTRAR</button>
+    <input class="search-input" placeholder="Busca" type="text" [formControl]="searchControl">
+    <button class="create-button" [routerLink]="['/manufacturers/create']">CADASTRAR</button>
   </section>
   <section class="table-container">
     <table class="table-container__table">
       <thead class="table-container__table--head">
         <tr>
-          <th>NOME <img src="/assets/icons/arrow-up.svg" alt="arrow-up"></th>
-          <th>CNPJ</th>
-          <th>ENDEREÇO</th>
+          <th class="sortable">NOME <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
+          <th class="sortable">CNPJ <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'cnpj'"></th>
+          <th class="sortable">ENDEREÇO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'logradouro'"></th>
           <th>AÇÃO</th>
         </tr>
       </thead>

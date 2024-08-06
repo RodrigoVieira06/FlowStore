@@ -30,6 +30,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   public pageSizes: number[] = [10, 25, 50];
 
   public searchControl = new FormControl();
+  public orderBy: string = '';
 
   private subscriptions = new Subscription();
 

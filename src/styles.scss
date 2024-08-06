@@ -1,5 +1,8 @@
 @use '@angular/material' as mat;
-@use '../public/assets/styles/form-styles';
+@use '../public/assets/styles/form';
+@use '../public/assets/styles/table';
+@use '../public/assets/styles/search_input';
+@use '../public/assets/styles/buttons';
 
 @include mat.core();
 
