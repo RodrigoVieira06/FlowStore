@@ -10,14 +10,14 @@
           <th class="sortable">PRODUTO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
           <th class="sortable">FABRICANTE <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'fabricanteID'"></th>
           <th class="sortable hideColumn">DESCRIÇÃO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'descricao'"></th>
-          <th class="sortable">AÇÃO</th>
+          <th>AÇÃO</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let entity of entities">
           <td>
             <p>{{ entity.nome }}</p>
-            <p class="subtitle">{{entity.codigoBarras}}</p>
+            <p class="subtitle word-break">{{entity.codigoBarras}}</p>
           </td>
           <td>
             {{entity.fabricante!.nome}}

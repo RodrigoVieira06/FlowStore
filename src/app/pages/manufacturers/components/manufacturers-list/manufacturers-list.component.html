@@ -16,7 +16,7 @@
       <tbody>
         <tr *ngFor="let entity of entities">
           <td>{{ entity.nome }}</td>
-          <td>{{ entity.cnpj | mask: '00.000.000/0000-00' }}</td>
+          <td class="word-break">{{ entity.cnpj | mask: '00.000.000/0000-00' }}</td>
           <td class="hideColumn">
             {{ entity.logradouro }}, {{entity.numero}}, {{entity.cidade}}, {{entity.estado}}, {{entity.cep}}
           </td>

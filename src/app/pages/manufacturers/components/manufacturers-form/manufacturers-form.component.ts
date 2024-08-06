@@ -54,6 +54,10 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   }
 
   private getAddressInformation(): void {
+    if (this.action === 'show') {
+      return;
+    }
+
     const subscription = this.manufacturerForm.get('cep')?.valueChanges.pipe(
       distinctUntilChanged(),
       switchMap(value => {

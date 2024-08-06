@@ -23,7 +23,7 @@ export class ProductsFormComponent {
     descricao: new FormControl('', Validators.required),
   });
 
-  public fabricanteCNPJ = new FormControl;
+  public fabricanteName = new FormControl;
 
   public action: 'create' | 'edit' | 'show' = 'create';
 
@@ -41,13 +41,14 @@ export class ProductsFormComponent {
     private loadingService: LoadingService,
     private toasterService: ToasterService
   ) {
-    this.fabricanteCNPJ.setValue('');
-    this.fabricanteCNPJ.addValidators(Validators.required);
+    this.fabricanteName.setValue('');
+    this.fabricanteName.addValidators(Validators.required);
   }
 
   ngOnInit(): void {
     this.verifyFormAction();
     this.getManufacturers();
+    this.manufacturerChange();
   }
 
   ngOnDestroy(): void {
@@ -55,21 +56,54 @@ export class ProductsFormComponent {
   }
 
   public onScroll(): void {
+    this.loadingService.show();
     this.pageIndex++;
 
-    this.manufacturersService.searchManufacturersByName(this.productForm.get('fabricanteCNPJ')?.value, this.pageSize, this.pageIndex)
-      .subscribe((response: PaginatedResponse<Manufacturer>) => {
-        this.manufacturersOptions = [...this.manufacturersOptions, ...response.content];
+    const subscribe = this.manufacturersService.searchManufacturersByName(this.fabricanteName.value, this.pageSize, this.pageIndex)
+      .subscribe({
+        next: (response: PaginatedResponse<Manufacturer>) => {
+          this.manufacturersOptions = [...this.manufacturersOptions, ...response.content];
+          this.loadingService.hide();
+        },
+        error: () => {
+          this.toasterService.showToast('Ocorreu um erro ao buscar mais fabricantes', 'error');
+          this.loadingService.hide();
+        }
       });
+
+    this.subscriptions.add(subscribe);
   }
 
   public getManufacturers() {
-    this.fabricanteCNPJ.valueChanges.pipe(
+    this.loadingService.show();
+    this.pageIndex++;
+
+    const subscribe = this.manufacturersService.searchManufacturersByName(this.fabricanteName.value, this.pageSize, this.pageIndex)
+      .subscribe({
+        next: (response: PaginatedResponse<Manufacturer>) => {
+          this.manufacturersOptions = response.content;
+          this.loadingService.hide();
+        },
+        error: () => {
+          this.toasterService.showToast('Ocorreu um erro ao buscar mais fabricantes', 'error');
+          this.loadingService.hide();
+        }
+      });
+
+    this.subscriptions.add(subscribe);
+  }
+
+  public manufacturerChange() {
+    const subscribe = this.fabricanteName.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((manufacturer: string) => {
+      switchMap((manufacturer: string | Manufacturer) => {
         this.loadingService.show();
-        return this.manufacturersService.searchManufacturersByName(manufacturer, this.pageSize, this.pageIndex);
+        if (typeof manufacturer === 'string') {
+          return this.manufacturersService.searchManufacturersByName(manufacturer, this.pageSize, this.pageIndex);
+        }
+
+        return this.manufacturersService.searchManufacturersByName(manufacturer.nome, this.pageSize, this.pageIndex);
       })
     )
       .subscribe({
@@ -81,7 +115,9 @@ export class ProductsFormComponent {
           this.toasterService.showToast('Ocorreu um erro ao buscar os fabricantes', 'error');
           this.loadingService.hide();
         }
-      })
+      });
+
+    this.subscriptions.add(subscribe);
   }
 
   public onSubmit(): void {
@@ -99,13 +135,11 @@ export class ProductsFormComponent {
   }
 
   public createProduct(): void {
-    let subscription: Subscription;
-
     this.loadingService.show();
 
-    this.productForm.get('fabricanteID')?.setValue(this.fabricanteCNPJ.value);
+    this.productForm.get('fabricanteID')?.setValue(this.fabricanteName.value);
 
-    subscription = this.productsService.createProduct(this.productForm.value)
+    const subscription = this.productsService.createProduct(this.productForm.value)
       .subscribe({
         next: () => {
           this.toasterService.showToast('Produto cadastrado com sucesso', 'success');
@@ -176,8 +210,12 @@ export class ProductsFormComponent {
   private setFormData(data: Product): void {
     this.productForm.get('nome')?.setValue(data.nome);
     this.productForm.get('fabricanteID')?.setValue(data.fabricante?.id);
-    this.fabricanteCNPJ.setValue(data.fabricante?.id);
+    this.fabricanteName.setValue(data.fabricante?.id);
     this.productForm.get('codigoBarras')?.setValue(data.codigoBarras);
     this.productForm.get('descricao')?.setValue(data.descricao);
+  }
+
+  public displayFn(option: Manufacturer): string {
+    return option ? option.nome : '';
   }
 }
