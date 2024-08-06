@@ -16,6 +16,7 @@
   @media (max-width: 700px) {
     margin-inline: 20px;
     width: calc(100% - 20px);
+    font-size: 14px;
   }
 
   .hideColumn {
@@ -122,6 +123,10 @@
       font-weight: 500;
       color: $text-secundary-color;
 
+      @media (max-width: 700px) {
+        margin-left: 5px;
+      }
+
       select {
         width: 80px;
         height: 38px;
@@ -129,6 +134,11 @@
         border-radius: 6px;
         text-align: center;
         font-weight: 600;
+
+        @media (max-width: 700px) {
+          margin-left: 5px;
+          width: 55px;
+        }
       }
     }
 
@@ -136,6 +146,10 @@
       display: flex;
       gap: 2px;
       margin-right: 24px;
+
+      @media (max-width: 700px) {
+        margin-right: 5px;
+      }
 
       button {
         border: 0;
