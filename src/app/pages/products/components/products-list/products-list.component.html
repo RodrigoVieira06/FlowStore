@@ -9,7 +9,7 @@
         <tr>
           <th class="sortable">PRODUTO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
           <th class="sortable">FABRICANTE <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'fabricanteID'"></th>
-          <th class="sortable">DESCRIÇÃO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'descricao'"></th>
+          <th class="sortable hideColumn">DESCRIÇÃO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'descricao'"></th>
           <th class="sortable">AÇÃO</th>
         </tr>
       </thead>
@@ -22,7 +22,7 @@
           <td>
             {{entity.fabricante!.nome}}
           </td>
-          <td>
+          <td class="hideColumn">
             {{entity.descricao}}
           </td>
           <td class="actions">

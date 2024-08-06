@@ -1,7 +1,7 @@
 <app-loading />
 <app-toaster />
 <mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav class="app-container__sidenav" opened mode="side">
+  <mat-sidenav #sidenav class="app-container__sidenav" [opened]="sidenavOpened" [mode]="sidenavMode">
     <app-sidenav [sidenav]="sidenav" />
   </mat-sidenav>
   <mat-sidenav-content class="app-container__content">

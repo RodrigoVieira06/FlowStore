@@ -9,7 +9,7 @@
         <tr>
           <th class="sortable">NOME <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
           <th class="sortable">CNPJ <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'cnpj'"></th>
-          <th class="sortable">ENDEREÇO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'logradouro'"></th>
+          <th class="sortable hideColumn">ENDEREÇO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'logradouro'"></th>
           <th>AÇÃO</th>
         </tr>
       </thead>
@@ -17,7 +17,7 @@
         <tr *ngFor="let entity of entities">
           <td>{{ entity.nome }}</td>
           <td>{{ formatCnpj(entity.cnpj) }}</td>
-          <td>
+          <td class="hideColumn">
             {{ entity.logradouro }}, {{entity.numero}}, {{entity.cidade}}, {{entity.estado}}, {{entity.cep}}
           </td>
           <td class="actions">

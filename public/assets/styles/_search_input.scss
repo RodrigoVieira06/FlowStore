@@ -1,8 +1,11 @@
 @import './colors';
 
 .search-input {
-  width: 352px;
+  width: 35vw;
+  max-width: 352px;
   height: 40px;
+  margin-right: 10px;
+  margin-left: 70px;
   font-size: 15px;
   color: $text-primary-color;
   background-color: $contrast-color;
@@ -15,6 +18,14 @@
   background-size: 20px 20px;
   padding-right: 40px;
   transition: background-color 0.3s ease;
+
+  @media (max-width: 450px) {
+    width: 20vw;
+  }
+
+  @media (max-width: 700px) {
+    margin-inline: 20px;
+  }
 
   &:focus {
     outline: none;
