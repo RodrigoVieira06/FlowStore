@@ -55,25 +55,6 @@ export class ProductsFormComponent {
     this.subscriptions.unsubscribe();
   }
 
-  public onScroll(): void {
-    this.loadingService.show();
-    this.pageIndex++;
-
-    const subscribe = this.manufacturersService.searchManufacturersByName(this.fabricanteName.value, this.pageSize, this.pageIndex)
-      .subscribe({
-        next: (response: PaginatedResponse<Manufacturer>) => {
-          this.manufacturersOptions = [...this.manufacturersOptions, ...response.content];
-          this.loadingService.hide();
-        },
-        error: () => {
-          this.toasterService.showToast('Ocorreu um erro ao buscar mais fabricantes', 'error');
-          this.loadingService.hide();
-        }
-      });
-
-    this.subscriptions.add(subscribe);
-  }
-
   public getManufacturers() {
     this.loadingService.show();
     this.pageIndex++;

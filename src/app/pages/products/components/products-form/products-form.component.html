@@ -16,7 +16,7 @@
       <input id="fabricanteID" type="text" [formControl]="fabricanteName" [matAutocomplete]="auto"
         [readOnly]="action === 'show'">
       <label [ngClass]="{'active': fabricanteName.value}">Fabricante *</label>
-      <mat-autocomplete #auto="matAutocomplete" (scroll)="onScroll()" [displayWith]="displayFn">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let option of manufacturersOptions" [value]="option">
           <p>{{option.nome}}</p>
           <p>{{option.cnpj | mask: '00.000.000/0000-00'}}</p>
