@@ -31,6 +31,12 @@ git clone git@github.com:RodrigoVieira06/volttaTest-FlowStore.git
 cd volttaTest-FlowStore/
 ```
 
+Agora, é necessário instalar as dependências contidas no package.json:
+
+```sh
+npm install
+```
+
 Com o repositorio em mãos, deveremos adicionar as variáveis de ambiente utilizando o comando:
 
 ```sh
