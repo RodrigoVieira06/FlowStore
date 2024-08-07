@@ -103,7 +103,7 @@ export class ProductsFormComponent {
 
   public onSubmit(): void {
     if (!this.productForm.valid) {
-      this.toasterService.showToast('Formulário inválido. Por favor, corriga nos campos indicados com erro', 'error');
+      this.toasterService.showToast('Formulário inválido. Por favor, confira os campos assinalados com erro com erro', 'error');
       return;
     }
 
