@@ -147,7 +147,7 @@ Antes de enviar qualquer pull request, certifique-se de que todos os testes est�
 ng test --no-watch --code-coverage
 ```
 
-Este comando irá rodar os testes de unidade e irá informar a cobertura de testes. Sempre que desenvolver uma nova função, recomenda-se adicionar um novo teste, para que o percentual se mantenha pelo menos 80% dos métodos.
+Este comando irá rodar os testes de unidade e irá informar a cobertura de testes (informando statements, branches, functions e lines). Sempre que desenvolver uma nova funcionalidade ou correção que contenha novos métodos, deve-se adicionar novos testes.
 
 ## Conclusão
 
