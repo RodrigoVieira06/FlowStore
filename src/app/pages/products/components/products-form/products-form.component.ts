@@ -191,7 +191,7 @@ export class ProductsFormComponent {
   public setFormData(data: Product): void {
     this.productForm.get('nome')?.setValue(data.nome);
     this.productForm.get('fabricanteID')?.setValue(data.fabricante?.id);
-    this.fabricanteName.setValue(data.fabricante?.id);
+    this.fabricanteName.setValue(data.fabricante);
     this.productForm.get('codigoBarras')?.setValue(data.codigoBarras);
     this.productForm.get('descricao')?.setValue(data.descricao);
   }
