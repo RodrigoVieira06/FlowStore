@@ -53,7 +53,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  private getAddressInformation(): void {
+  public getAddressInformation(): void {
     if (this.action === 'show') {
       return;
     }
@@ -145,7 +145,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (!this.manufacturerForm.valid) {
-      this.toasterService.showToast('Formulário inválido. Por favor, corriga nos campos indicados', 'error');
+      this.toasterService.showToast('Formulário inválido. Por favor, confira os campos assinalados com erro', 'error');
       return;
     }
 
