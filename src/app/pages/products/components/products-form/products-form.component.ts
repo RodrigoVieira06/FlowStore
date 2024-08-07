@@ -47,7 +47,9 @@ export class ProductsFormComponent {
 
   ngOnInit(): void {
     this.verifyFormAction();
-    this.getManufacturers();
+    if (this.action === 'create') {
+      this.getManufacturers();
+    }
     this.manufacturerChange();
   }
 
@@ -66,7 +68,7 @@ export class ProductsFormComponent {
           this.loadingService.hide();
         },
         error: () => {
-          this.toasterService.showToast('Ocorreu um erro ao buscar mais fabricantes', 'error');
+          this.toasterService.showToast('Ocorreu um erro ao buscar fabricantes', 'error');
           this.loadingService.hide();
         }
       });
