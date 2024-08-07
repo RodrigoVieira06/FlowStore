@@ -120,6 +120,16 @@ describe('ProductsFormComponent', () => {
     expect(component.productForm.get('descricao')).toBeTruthy();
   });
 
+  it('should call verifyFormAction, getManufacturers and manufacturerChange', () => {
+    spyOn(component, 'verifyFormAction');
+    spyOn(component, 'getManufacturers');
+    spyOn(component, 'manufacturerChange');
+    component.ngOnInit();
+    expect(component.verifyFormAction).toHaveBeenCalled();
+    expect(component.getManufacturers).toHaveBeenCalled();
+    expect(component.manufacturerChange).toHaveBeenCalled();
+  });
+
   it('should get manufacturers on init', () => {
     spyOn(manufacturersService, 'searchManufacturersByName').and.returnValue(of(mockPaginatedResponse));
     spyOn(loadingService, 'show');
@@ -172,5 +182,54 @@ describe('ProductsFormComponent', () => {
     component.editProduct();
     expect(toasterService.showToast).toHaveBeenCalledWith('Ocorreu um erro ao editar o produto', 'error');
     expect(loadingService.hide).toHaveBeenCalled();
+  });
+
+  it('should set form data from Product object', () => {
+    const product: Product = {
+      nome: 'Product 1',
+      fabricante: {
+        id: 1,
+        nome: "Voltta",
+        cnpj: "47944006000180",
+        cep: "04551010",
+        logradouro: "Rua Fidêncio Ramos",
+        numero: "308",
+        complemento: "1 andar",
+        bairro: "Vila Olímpia",
+        cidade: "São Paulo",
+        estado: "São Paulo",
+        contatoTipo: "Email",
+        contato: "contato@voltta.com.br"
+      },
+      codigoBarras: '123456',
+      descricao: 'Description'
+    };
+    component.setFormData(product);
+    expect(component.productForm.get('nome')?.value).toBe('Product 1');
+    expect(component.productForm.get('fabricanteID')?.value).toBe(1);
+    expect(component.productForm.get('codigoBarras')?.value).toBe('123456');
+    expect(component.productForm.get('descricao')?.value).toBe('Description');
+  });
+
+  it('should return the name of the manufacturer', () => {
+    const manufacturer: Manufacturer = {
+      id: 1,
+      nome: "Voltta",
+      cnpj: "47944006000180",
+      cep: "04551010",
+      logradouro: "Rua Fidêncio Ramos",
+      numero: "308",
+      complemento: "1 andar",
+      bairro: "Vila Olímpia",
+      cidade: "São Paulo",
+      estado: "São Paulo",
+      contatoTipo: "Email",
+      contato: "contato@voltta.com.br"
+    };
+    expect(component.displayFn(manufacturer)).toBe('Voltta');
+  });
+
+  it('should return an empty string if manufacturer is null', () => {
+    expect(component.displayFn(null as unknown as Manufacturer)).toBe('');
   });
 });

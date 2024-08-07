@@ -157,7 +157,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     this.editManufacturer();
   }
 
-  private clearAddressFields(): void {
+  public clearAddressFields(): void {
     this.manufacturerForm.get('logradouro')?.setValue('');
     this.manufacturerForm.get('cidade')?.setValue('');
     this.manufacturerForm.get('estado')?.setValue('');
@@ -166,14 +166,14 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     this.manufacturerForm.get('complemento')?.setValue('');
   }
 
-  private fillInAddressFields(values: Cep): void {
+  public fillInAddressFields(values: Cep): void {
     this.manufacturerForm.get('logradouro')?.setValue(values.logradouro);
     this.manufacturerForm.get('cidade')?.setValue(values.localidade);
     this.manufacturerForm.get('estado')?.setValue(values.uf);
     this.manufacturerForm.get('bairro')?.setValue(values.bairro);
   }
 
-  private verifyFormAction(): void {
+  public verifyFormAction(): void {
     const cnpj = this.activeRoute.snapshot.paramMap.get('cnpj');
 
     if (!cnpj) {
@@ -187,7 +187,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
     this.getManufacturer(cnpj);
   }
 
-  private setFormData(data: Manufacturer): void {
+  public setFormData(data: Manufacturer): void {
     this.manufacturerForm.get('cnpj')?.setValue(data.cnpj);
     this.manufacturerForm.get('nome')?.setValue(data.nome);
     this.manufacturerForm.get('cep')?.setValue(data.cep);

@@ -174,7 +174,7 @@ export class ProductsFormComponent {
     this.subscriptions.add(subscription);
   }
 
-  private verifyFormAction(): void {
+  public verifyFormAction(): void {
     const barCode = this.activeRoute.snapshot.paramMap.get('barcode');
 
     if (!barCode) {
@@ -188,7 +188,7 @@ export class ProductsFormComponent {
     this.getProduct(barCode);
   }
 
-  private setFormData(data: Product): void {
+  public setFormData(data: Product): void {
     this.productForm.get('nome')?.setValue(data.nome);
     this.productForm.get('fabricanteID')?.setValue(data.fabricante?.id);
     this.fabricanteName.setValue(data.fabricante?.id);

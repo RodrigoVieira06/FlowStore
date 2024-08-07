@@ -13,6 +13,7 @@ import { LoadingService } from '../../../../shared/services/loading/loading.serv
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
 import { ManufacturersService } from '../../services/manufacturers.service';
 import { Manufacturer } from '../../models/manufacturer';
+import { Cep } from '../../../../shared/models/cep';
 
 describe('ManufacturersFormComponent', () => {
   let component: ManufacturersFormComponent;
@@ -123,5 +124,69 @@ describe('ManufacturersFormComponent', () => {
     component.editManufacturer();
     expect(toasterService.showToast).toHaveBeenCalledWith('Ocorreu um erro ao editar o fabricante', 'error');
     expect(loadingService.hide).toHaveBeenCalled();
+  });
+
+  it('should show error message if form is invalid', () => {
+    spyOn(toasterService, 'showToast');
+    component.manufacturerForm.setValue({
+      cnpj: '',
+      nome: '',
+      cep: '',
+      logradouro: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      estado: '',
+      contato: '',
+      contatoTipo: 'Email'
+    });
+    component.onSubmit();
+    expect(toasterService.showToast).toHaveBeenCalledWith('Formulário inválido. Por favor, confira os campos assinalados com erro', 'error');
+  });
+
+  it('should clear address fields', () => {
+    component.clearAddressFields();
+    expect(component.manufacturerForm.get('logradouro')?.value).toBe('');
+    expect(component.manufacturerForm.get('cidade')?.value).toBe('');
+    expect(component.manufacturerForm.get('estado')?.value).toBe('');
+    expect(component.manufacturerForm.get('bairro')?.value).toBe('');
+    expect(component.manufacturerForm.get('numero')?.value).toBe('');
+    expect(component.manufacturerForm.get('complemento')?.value).toBe('');
+  });
+
+  it('should fill in address fields', () => {
+    const cepResponse: Cep = {
+      cep: '12345678',
+      logradouro: 'Rua Teste',
+      bairro: 'Bairro Teste',
+      localidade: 'Cidade Teste',
+      uf: 'UF'
+    };
+    component.fillInAddressFields(cepResponse);
+    expect(component.manufacturerForm.get('logradouro')?.value).toBe('Rua Teste');
+    expect(component.manufacturerForm.get('cidade')?.value).toBe('Cidade Teste');
+    expect(component.manufacturerForm.get('estado')?.value).toBe('UF');
+    expect(component.manufacturerForm.get('bairro')?.value).toBe('Bairro Teste');
+  });
+
+  it('should set form data from Manufacturer object', () => {
+    const manufacturer: Manufacturer = {
+      cnpj: '12345678000195',
+      nome: 'Manufacturer Teste',
+      cep: '12345678',
+      logradouro: 'Rua Teste',
+      numero: '123',
+      complemento: '',
+      bairro: 'Bairro Teste',
+      cidade: 'Cidade Teste',
+      estado: 'UF',
+      contato: 'contact@test.com',
+      contatoTipo: 'Email',
+      id: 1
+    };
+    component.setFormData(manufacturer);
+    expect(component.manufacturerForm.get('cnpj')?.value).toBe('12345678000195');
+    expect(component.manufacturerForm.get('nome')?.value).toBe('Manufacturer Teste');
   });
 });
