@@ -22,7 +22,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
     SharedModule,
     ProductsModule,
     ManufacturersModule,
-    MatSidenavModule,
+    MatSidenavModule
   ],
   providers: [
     provideClientHydration(),

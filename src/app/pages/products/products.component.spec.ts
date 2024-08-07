@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductsComponent } from './products.component';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../shared/shared.module';
+import { AppRoutingProductsModule } from './app-routing-products.module';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
@@ -8,9 +11,14 @@ describe('ProductsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProductsComponent]
+      declarations: [ProductsComponent],
+      imports: [
+        CommonModule,
+        AppRoutingProductsModule,
+        SharedModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
@@ -19,5 +27,12 @@ describe('ProductsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render header title', () => {
+    const fixture = TestBed.createComponent(ProductsComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('p')?.textContent).toContain('Produtos');
   });
 });

@@ -26,7 +26,7 @@ import { MatInputModule } from '@angular/material/input';
     NgxMaskDirective,
     NgxMaskPipe,
     MatAutocompleteModule,
-    MatInputModule,
+    MatInputModule
   ],
   exports: [
     ProductsFormComponent,

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavComponent } from './sidenav.component';
+import { AppRoutingModule } from '../../../app-routing.module';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -8,7 +9,10 @@ describe('SidenavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SidenavComponent]
+      declarations: [SidenavComponent],
+      imports: [
+        AppRoutingModule
+      ]
     })
     .compileComponents();
 
