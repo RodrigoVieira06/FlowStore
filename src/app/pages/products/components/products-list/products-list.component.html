@@ -7,9 +7,19 @@
     <table class="table-container__table">
       <thead class="table-container__table--head">
         <tr>
-          <th class="sortable">PRODUTO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
-          <th class="sortable">FABRICANTE <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'fabricanteID'"></th>
-          <th class="sortable hideColumn">DESCRIÇÃO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'descricao'"></th>
+          <th class="sortable" (click)="sortData('nome')">
+            PRODUTO
+            <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="sortBy === 'nome' && reversedOrder.nome">
+            <img src="/assets/icons/arrow-down.svg" alt="arrow-down" *ngIf="sortBy === 'nome' && !reversedOrder.nome">
+          </th>
+          <th class="sortable" (click)="sortData('fabricante')">
+            FABRICANTE
+            <img src="/assets/icons/arrow-up.svg" alt="arrow-up"
+              *ngIf="sortBy === 'fabricante' && reversedOrder.fabricante">
+            <img src="/assets/icons/arrow-down.svg" alt="arrow-down"
+              *ngIf="sortBy === 'fabricante' && !reversedOrder.fabricante">
+          </th>
+          <th class="hideColumn">DESCRIÇÃO</th>
           <th>AÇÃO</th>
         </tr>
       </thead>

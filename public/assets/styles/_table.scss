@@ -53,6 +53,10 @@
       word-break: break-all;
     }
 
+    th {
+      white-space: nowrap;
+    }
+
     th,
     td {
       text-align: start;

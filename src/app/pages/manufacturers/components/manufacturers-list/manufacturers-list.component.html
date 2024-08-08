@@ -7,9 +7,17 @@
     <table class="table-container__table">
       <thead class="table-container__table--head">
         <tr>
-          <th class="sortable">NOME <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'nome'"></th>
-          <th class="sortable">CNPJ <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'cnpj'"></th>
-          <th class="sortable hideColumn">ENDEREÇO <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="orderBy === 'logradouro'"></th>
+          <th class="sortable" (click)="sortData('nome')">
+            NOME
+            <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="sortBy === 'nome' && reversedOrder">
+            <img src="/assets/icons/arrow-down.svg" alt="arrow-down" *ngIf="sortBy === 'nome' && !reversedOrder">
+          </th>
+          <th class="sortable" (click)="sortData('cnpj')">
+            CNPJ
+            <img src="/assets/icons/arrow-up.svg" alt="arrow-up" *ngIf="sortBy === 'cnpj' && reversedOrder">
+            <img src="/assets/icons/arrow-down.svg" alt="arrow-down" *ngIf="sortBy === 'cnpj' && !reversedOrder">
+          </th>
+          <th class="hideColumn">ENDEREÇO</th>
           <th>AÇÃO</th>
         </tr>
       </thead>

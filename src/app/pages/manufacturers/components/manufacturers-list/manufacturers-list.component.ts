@@ -29,7 +29,8 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   public pageSizes: number[] = [10, 25, 50];
 
   public searchControl = new FormControl();
-  public orderBy: string = '';
+  public sortBy: 'nome' | 'cnpj' = 'nome';
+  public reversedOrder = false;
 
   private subscriptions = new Subscription();
 
@@ -218,5 +219,15 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     this.pageSize = Number(selectElement.value);
     this.currentPage = 0;
     this.getManufacturers();
+  }
+
+  public sortData(order: "nome" | "cnpj"): void {
+    this.sortBy = order;
+    this.reversedOrder = !this.reversedOrder;
+    this.entities.sort((firstElement: Manufacturer, secondElement: Manufacturer) => {
+      return this.reversedOrder
+        ? secondElement[order]!.localeCompare(firstElement[order])
+        : firstElement[order]!.localeCompare(secondElement[order]);
+    });
   }
 }

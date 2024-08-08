@@ -28,7 +28,8 @@ export class ProductsListComponent {
   public pageSizes: number[] = [10, 25, 50];
 
   public searchControl = new FormControl();
-  public orderBy: string = '';
+  public sortBy: 'nome' | 'fabricante' = 'nome';
+  public reversedOrder = { nome: false, fabricante: true };
 
   private subscriptions = new Subscription();
 
@@ -212,5 +213,28 @@ export class ProductsListComponent {
     this.pageSize = Number(selectElement.value);
     this.currentPage = 0;
     this.getProducts();
+  }
+
+  public sortData(order: "nome" | "fabricante"): void {
+    if (order === "nome") {
+      this.sortBy = 'nome';
+      this.reversedOrder.nome = !this.reversedOrder.nome;
+      this.entities.sort((firstElement: Product, secondElement: Product) => {
+        return this.reversedOrder.nome
+          ? secondElement.nome!.localeCompare(firstElement.nome)
+          : firstElement.nome!.localeCompare(secondElement.nome);
+      });
+
+      return;
+    }
+
+    this.sortBy = 'fabricante';
+    this.reversedOrder.fabricante = !this.reversedOrder.fabricante;
+
+    this.entities.sort((firstElement: Product, secondElement: Product) => {
+      return this.reversedOrder.fabricante
+        ? secondElement.fabricante!.nome.localeCompare(firstElement.fabricante!.nome)
+        : firstElement.fabricante!.nome.localeCompare(secondElement.fabricante!.nome);
+    });
   }
 }
