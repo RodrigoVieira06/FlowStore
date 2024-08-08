@@ -14,7 +14,7 @@
 
     <div class="field-group">
       <input id="fabricanteID" type="text" [formControl]="fabricanteName" [matAutocomplete]="auto"
-        [readOnly]="action === 'show'">
+        [readOnly]="action !== 'create'">
       <label [ngClass]="{'active': fabricanteName.value}">Fabricante *</label>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let option of manufacturersOptions" [value]="option">

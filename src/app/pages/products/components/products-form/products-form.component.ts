@@ -63,6 +63,10 @@ export class ProductsFormComponent {
   }
 
   public getManufacturers() {
+    if (this.action !== 'create') {
+      return;
+    }
+
     this.loadingService.show();
     this.pageIndex++;
 
@@ -125,7 +129,7 @@ export class ProductsFormComponent {
   public createProduct(): void {
     this.loadingService.show();
 
-    this.productForm.get('fabricanteID')?.setValue(this.fabricanteName.value);
+    this.productForm.get('fabricanteID')?.setValue(this.fabricanteName.value.id);
 
     const subscription = this.productsService.createProduct(this.productForm.value)
       .subscribe({
