@@ -9,6 +9,8 @@ import { ManufacturersService } from '../../services/manufacturers.service';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { PaginatedResponse } from '../../../../shared/models/paginated-response';
 import { Manufacturer } from '../../models/manufacturer';
+import { cepValidator, cnpjValidator } from '../../../../shared/utils/validators';
+import { MainEnums } from '../../../../shared/enums/enum';
 
 @Component({
   selector: 'app-manufacturers-form-component',
@@ -17,9 +19,9 @@ import { Manufacturer } from '../../models/manufacturer';
 })
 export class ManufacturersFormComponent implements OnInit, OnDestroy {
   public manufacturerForm: FormGroup = new FormGroup({
-    cnpj: new FormControl('', [Validators.required, Validators.pattern(/^(\d{3})\.?(\d{3})\.?(\d{3})\-?(\d{2}$)$|^(\d{2})\.?(\d{3})\.?(\d{3})\/?([0-1]{4})\-?(\d{2})$/)]),
+    cnpj: new FormControl('', [Validators.required, Validators.pattern(cnpjValidator())]),
     nome: new FormControl('', Validators.required),
-    cep: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+    cep: new FormControl('', [Validators.required, Validators.pattern(cepValidator())]),
     logradouro: new FormControl('', Validators.required),
     numero: new FormControl('', Validators.required),
     complemento: new FormControl(''),
@@ -33,6 +35,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   public action: 'create' | 'edit' | 'show' = 'create';
 
   private subscriptions = new Subscription();
+  private enums = MainEnums;
 
   constructor(
     private manufacturersService: ManufacturersService,
@@ -62,7 +65,7 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       switchMap(value => {
         this.clearAddressFields()
-        if (value.length === 8) {
+        if (value.length === this.enums.CEP_LENGTH) {
           this.loadingService.show();
           return this.cepService.getAddress(value);
         }
@@ -90,10 +93,10 @@ export class ManufacturersFormComponent implements OnInit, OnDestroy {
   public getManufacturer(cnpj: string): void {
     this.loadingService.show();
 
-    const subscription = this.manufacturersService.searchManufacturersByCNPJ(cnpj, 1, 0)
+    const subscription = this.manufacturersService.searchManufacturersByCNPJ(cnpj, this.enums.MAIN_PAGE_SIZE, this.enums.MAIN_CURRENT_PAGE)
       .subscribe({
         next: (response: PaginatedResponse<Manufacturer>) => {
-          this.setFormData(response.content[0]);
+          this.setFormData(response.content[this.enums.FIRST_CONTENT]);
           this.loadingService.hide();
         },
         error: () => {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToastMessage } from '../../models/toast-message';
 import { ToasterService } from '../../services/toaster/toaster.service';
+import { MainEnums } from '../../enums/enum';
 
 @Component({
   selector: 'app-toaster',
@@ -12,14 +13,15 @@ export class ToasterComponent {
   public toastMessages: ToastMessage[] = [];
 
   private subscriptions = new Subscription();
+  private enums = MainEnums;
 
   constructor(private toasterService: ToasterService) {}
 
   ngOnInit() {
     this.subscriptions = this.toasterService.toastState.subscribe((toast: ToastMessage) => {
       this.toastMessages.push(toast);
-      setTimeout(() => this.addShowClass(toast), 10);
-      setTimeout(() => this.removeToast(toast), 3000);
+      setTimeout(() => this.addShowClass(toast), this.enums.SHOW_TOASTER_TIME);
+      setTimeout(() => this.removeToast(toast), this.enums.CLOSE_TOASTER_TIME);
     });
   }
 

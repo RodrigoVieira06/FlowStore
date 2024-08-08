@@ -8,6 +8,7 @@ import { LoadingService } from '../../../../shared/services/loading/loading.serv
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog/confirm-dialog.service';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
 import { Router } from '@angular/router';
+import { MainEnums } from '../../../../shared/enums/enum';
 
 @Component({
   selector: 'app-products-list-component',
@@ -18,9 +19,9 @@ export class ProductsListComponent {
   public entities: Product[] = [];
 
   public pageConfig?: PaginatedResponse<Product>;
-  public currentPage: number = 0;
-  public pageSize: number = 10;
-  public totalPages: number = 0;
+  public currentPage: number;
+  public pageSize: number;
+  public totalPages: number;
   public pages: number[] = [];
   public visiblePages: number[] = [];
   public showStartEllipsis: boolean = false;
@@ -32,6 +33,7 @@ export class ProductsListComponent {
   public reversedOrder = { nome: false, fabricante: true };
 
   private subscriptions = new Subscription();
+  private enums = MainEnums;
 
   constructor(
     private loadingService: LoadingService,
@@ -39,7 +41,11 @@ export class ProductsListComponent {
     private confirmDialogService: ConfirmDialogService,
     private toasterService: ToasterService,
     private router: Router
-  ) { }
+  ) {
+    this.currentPage = this.enums.MAIN_CURRENT_PAGE;
+    this.pageSize = this.enums.INITIAL_PAGE_SIZE;
+    this.totalPages = this.enums.INITIAL_TOTAL_PAGES;
+  }
 
   ngOnInit() {
     this.getProducts();
@@ -211,7 +217,7 @@ export class ProductsListComponent {
     const selectElement = event.target as HTMLSelectElement;
     this.searchControl.setValue('');
     this.pageSize = Number(selectElement.value);
-    this.currentPage = 0;
+    this.currentPage = this.enums.MAIN_CURRENT_PAGE;
     this.getProducts();
   }
 

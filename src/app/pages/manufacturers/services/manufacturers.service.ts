@@ -9,9 +9,9 @@ import { PaginatedResponse } from '../../../shared/models/paginated-response';
   providedIn: 'root'
 })
 export class ManufacturersService {
-  private base_url: string = environment.BASE_URL;
-  private main_endpoint: string = environment.MANUFACTURERS_ENDPOINT;
-  private search_endpoint: string = environment.MANUFACTURERS_ENDPOINT_BY_NAME;
+  private readonly base_url: string = environment.BASE_URL;
+  private readonly main_endpoint: string = environment.MANUFACTURERS_ENDPOINT;
+  private readonly search_endpoint: string = environment.MANUFACTURERS_ENDPOINT_BY_NAME;
 
   constructor(private http: HttpClient) { }
 

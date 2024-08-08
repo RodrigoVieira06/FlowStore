@@ -9,8 +9,8 @@ import { Product } from '../models/product';
   providedIn: 'root'
 })
 export class ProductsService {
-  private base_url: string = environment.BASE_URL;
-  private main_endpoint: string = environment.PRODUCTS_ENDPOINT;
+  private readonly base_url: string = environment.BASE_URL;
+  private readonly main_endpoint: string = environment.PRODUCTS_ENDPOINT;
 
   constructor(private http: HttpClient) { }
 

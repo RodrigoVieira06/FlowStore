@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { debounceTime, distinctUntilChanged, map, Observable, Subscription, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subscription, switchMap } from 'rxjs';
 import { PaginatedResponse } from '../../../../shared/models/paginated-response';
 import { LoadingService } from '../../../../shared/services/loading/loading.service';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
@@ -9,6 +9,7 @@ import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products.service';
 import { ManufacturersService } from '../../../manufacturers/services/manufacturers.service';
 import { Manufacturer } from '../../../manufacturers/models/manufacturer';
+import { MainEnums } from '../../../../shared/enums/enum';
 
 @Component({
   selector: 'app-products-form-component',
@@ -28,10 +29,11 @@ export class ProductsFormComponent {
   public action: 'create' | 'edit' | 'show' = 'create';
 
   private subscriptions = new Subscription();
+  private enums = MainEnums;
 
   public manufacturersOptions: Manufacturer[] = [];
-  public pageSize = 10;
-  public pageIndex = 0;
+  public pageSize: number = 10;
+  public pageIndex: number = 0;
 
   constructor(
     private productsService: ProductsService,
@@ -43,6 +45,9 @@ export class ProductsFormComponent {
   ) {
     this.fabricanteName.setValue('');
     this.fabricanteName.addValidators(Validators.required);
+
+    this.pageSize = this.enums.INITIAL_PAGE_SIZE;
+    this.pageIndex = this.enums.MAIN_CURRENT_PAGE;
   }
 
   ngOnInit(): void {
@@ -141,10 +146,10 @@ export class ProductsFormComponent {
   public getProduct(codeBar: string): void {
     this.loadingService.show();
 
-    const subscription = this.productsService.searchProductsByBarcode(codeBar, 1, 0)
+    const subscription = this.productsService.searchProductsByBarcode(codeBar, this.enums.MAIN_PAGE_SIZE, this.enums.MAIN_CURRENT_PAGE)
       .subscribe({
         next: (response: PaginatedResponse<Product>) => {
-          this.setFormData(response.content[0]);
+          this.setFormData(response.content[this.enums.FIRST_CONTENT]);
           this.loadingService.hide();
         },
         error: () => {
@@ -185,7 +190,7 @@ export class ProductsFormComponent {
 
     const urlSegments: UrlSegment[] = this.activeRoute.snapshot.url;
 
-    this.action = urlSegments[0].path === 'edit' ? 'edit' : 'show';
+    this.action = urlSegments[this.enums.ACTION_URL_SEGMENT].path === 'edit' ? 'edit' : 'show';
 
     this.getProduct(barCode);
   }

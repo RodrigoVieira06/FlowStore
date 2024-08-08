@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
+import { MainEnums } from './shared/enums/enum';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,10 @@ export class AppComponent {
   public sidenavMode: MatDrawerMode;
   public sidenavOpened: boolean;
 
+  private enums = MainEnums;
+
   constructor() {
-    if (typeof window !== "undefined" && window.innerWidth > 1050) {
+    if (typeof window !== "undefined" && window.innerWidth > this.enums.SIDENAV_OPENED_PAGE_SIZE) {
       this.sidenavMode = 'side';
       this.sidenavOpened = true;
     } else {
@@ -22,7 +25,7 @@ export class AppComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
-    if (event.target.innerWidth < 1050) {
+    if (event.target.innerWidth < this.enums.SIDENAV_OPENED_PAGE_SIZE) {
       this.sidenavMode = 'over';
       this.sidenavOpened = false;
     } else {

@@ -9,6 +9,7 @@ import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog
 import { isInteger } from '../../../../shared/utils/utils';
 import { ToasterService } from '../../../../shared/services/toaster/toaster.service';
 import { Router } from '@angular/router';
+import { MainEnums } from '../../../../shared/enums/enum';
 
 @Component({
   selector: 'app-manufacturers-list-component',
@@ -19,20 +20,22 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
   public entities: Manufacturer[] = [];
 
   public pageConfig?: PaginatedResponse<Manufacturer>;
-  public currentPage: number = 0;
-  public pageSize: number = 10;
-  public totalPages: number = 0;
+  public currentPage: number;
+  public pageSize: number;
+  public totalPages: number;
   public pages: number[] = [];
   public visiblePages: number[] = [];
+
   public showStartEllipsis: boolean = false;
   public showEndEllipsis: boolean = false;
-  public pageSizes: number[] = [10, 25, 50];
+  public pageSizes: number[] = [10, 20, 30];
 
   public searchControl = new FormControl();
   public sortBy: 'nome' | 'cnpj' = 'nome';
   public reversedOrder = false;
 
   private subscriptions = new Subscription();
+  private enums = MainEnums;
 
   constructor(
     private loadingService: LoadingService,
@@ -40,7 +43,11 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     private confirmDialogService: ConfirmDialogService,
     private toasterService: ToasterService,
     private router: Router
-  ) { }
+  ) {
+    this.currentPage = this.enums.MAIN_CURRENT_PAGE;
+    this.pageSize = this.enums.INITIAL_PAGE_SIZE;
+    this.totalPages = this.enums.INITIAL_TOTAL_PAGES;
+  }
 
   ngOnInit() {
     this.getManufacturers();
@@ -217,7 +224,7 @@ export class ManufacturersListComponent implements OnInit, OnDestroy {
     const selectElement = event.target as HTMLSelectElement;
     this.searchControl.setValue('');
     this.pageSize = Number(selectElement.value);
-    this.currentPage = 0;
+    this.currentPage = this.enums.MAIN_CURRENT_PAGE;
     this.getManufacturers();
   }
 

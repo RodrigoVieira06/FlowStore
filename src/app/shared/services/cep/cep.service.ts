@@ -9,7 +9,7 @@ import { Cep } from '../../models/cep';
 })
 export class CepService {
 
-  private base_url: string = environment.VIACEP_URL;
+  private readonly base_url: string = environment.VIACEP_URL;
 
   constructor(private http: HttpClient) { }
 

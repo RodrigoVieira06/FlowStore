@@ -6,17 +6,20 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
   providedIn: 'root'
 })
 export class ConfirmDialogService {
-  private readonly dialog = inject(MatDialog);
+  private widthComponent = '250px';
+  private enterAnimationDurationComponent = '0ms';
+  private exitAnimationDurationComponent = '0ms';
 
+  private readonly dialog = inject(MatDialog);
 
   constructor() { }
 
   public open(title: string, bodyInfo: string): MatDialogRef<ConfirmDialogComponent, any> {
     return this.dialog.open(ConfirmDialogComponent, {
       data: { title: title, bodyInfo: bodyInfo, confirm: true },
-      width: '250px',
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms',
+      width: this.widthComponent,
+      enterAnimationDuration: this.enterAnimationDurationComponent,
+      exitAnimationDuration: this.exitAnimationDurationComponent,
     })
   }
 }
