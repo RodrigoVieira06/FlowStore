@@ -127,16 +127,6 @@ Abaixo, está o modelo da estrutura dos diretórios do projeto.
 Você pode entender detalhadamente a estrutura de diretórios utilizada acessando a
 [documentação de estrutura do projeto](docs/estruturaDoProjeto.md).
 
-## Construir e rodar o projeto com o Docker
-
-Para este projeto, foi utilizado o Makefile, pelos seguintes motivos:
-
-- Simplicidade: Simplifica a execução de comandos Docker longos e complexos.
-- Automação: Facilita a automação de tarefas comuns de desenvolvimento e deployment.
-- Manutenibilidade: Facilita a manutenção e documentação dos comandos necessários para o seu projeto.
-
-Eles disparam comandos docker para as finalidades abaixo:
-
 ## Desenvolvimento e testes
 
 Durante o desenvolvimento, você pode usar o comando ``ng serve``. A aplicação estará disponível em ``http://localhost:4200``.
