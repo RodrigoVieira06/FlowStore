@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "volttaTest-FlowStore": {
+    "FlowStore": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/voltta-test-flow-store",
+            "outputPath": "dist/flow-store",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -82,10 +82,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "volttaTest-FlowStore:build:production"
+              "buildTarget": "FlowStore:build:production"
             },
             "development": {
-              "buildTarget": "volttaTest-FlowStore:build:development"
+              "buildTarget": "FlowStore:build:development"
             }
           },
           "defaultConfiguration": "development"

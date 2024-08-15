@@ -24,7 +24,7 @@ describe('ManufacturersFormComponent', () => {
   let manufacturersService: ManufacturersService;
   const mockManufacturer: Manufacturer = {
     "id": 72,
-    "nome": "Voltta",
+    "nome": "Teste",
     "cnpj": "47944006000180",
     "cep": "04551010",
     "logradouro": "Rua Fidêncio Ramos",
@@ -34,7 +34,7 @@ describe('ManufacturersFormComponent', () => {
     "cidade": "São Paulo",
     "estado": "São Paulo",
     "contatoTipo": "Email",
-    "contato": "contato@voltta.com.br"
+    "contato": "contato@teste.com.br"
   };
 
   beforeEach(async () => {

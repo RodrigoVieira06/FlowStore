@@ -9,7 +9,7 @@
 @import "../public/assets/styles/colors";
 
 
-$volttaTest-FlowStore-theme: mat.define-theme((color: (theme-type: light,
+$FlowStore-theme: mat.define-theme((color: (theme-type: light,
         primary: mat.$cyan-palette,
         tertiary: mat.$blue-palette,
       ),
@@ -17,7 +17,7 @@ $volttaTest-FlowStore-theme: mat.define-theme((color: (theme-type: light,
       )));
 
 :root {
-  @include mat.all-component-themes($volttaTest-FlowStore-theme);
+  @include mat.all-component-themes($FlowStore-theme);
 }
 
 html,

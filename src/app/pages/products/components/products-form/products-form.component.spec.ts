@@ -189,7 +189,7 @@ describe('ProductsFormComponent', () => {
       nome: 'Product 1',
       fabricante: {
         id: 1,
-        nome: "Voltta",
+        nome: "Teste",
         cnpj: "47944006000180",
         cep: "04551010",
         logradouro: "Rua Fidêncio Ramos",
@@ -199,7 +199,7 @@ describe('ProductsFormComponent', () => {
         cidade: "São Paulo",
         estado: "São Paulo",
         contatoTipo: "Email",
-        contato: "contato@voltta.com.br"
+        contato: "contato@teste.com.br"
       },
       codigoBarras: '123456',
       descricao: 'Description'
@@ -214,7 +214,7 @@ describe('ProductsFormComponent', () => {
   it('should return the name of the manufacturer', () => {
     const manufacturer: Manufacturer = {
       id: 1,
-      nome: "Voltta",
+      nome: "Teste",
       cnpj: "47944006000180",
       cep: "04551010",
       logradouro: "Rua Fidêncio Ramos",
@@ -224,9 +224,9 @@ describe('ProductsFormComponent', () => {
       cidade: "São Paulo",
       estado: "São Paulo",
       contatoTipo: "Email",
-      contato: "contato@voltta.com.br"
+      contato: "contato@teste.com.br"
     };
-    expect(component.displayFn(manufacturer)).toBe('Voltta');
+    expect(component.displayFn(manufacturer)).toBe('Teste');
   });
 
   it('should return an empty string if manufacturer is null', () => {

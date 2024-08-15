@@ -27,8 +27,8 @@ vá até o diretório desejado, realize o clone via SSH e vá até a pasta princ
 da seguinte forma:
 
 ```sh
-git clone git@github.com:RodrigoVieira06/volttaTest-FlowStore.git
-cd volttaTest-FlowStore/
+git clone git@github.com:RodrigoVieira06/FlowStore.git
+cd FlowStore/
 ```
 
 Agora, é necessário instalar as dependências contidas no package.json:
